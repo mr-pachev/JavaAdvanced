@@ -10,12 +10,16 @@ public class _03_DecimalToBinaryConverter {
         int n = Integer.parseInt(scanner.nextLine());
 
         ArrayDeque<String> binary = new ArrayDeque<>();
-        int decimal;
 
-        while (n > 0) {
-            decimal = n % 2;
+        if (n == 0){
+            System.out.println(0);
+            return;
+        }
+
+        while (n != 0) {
+
+            binary.push(String.valueOf(n % 2));
             n = n / 2;
-            binary.push("" + decimal);
         }
 
         while (!binary.isEmpty()){
