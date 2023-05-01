@@ -14,18 +14,18 @@ public class _01_BrowserHistory {
         while (!input.equals("Home")) {
 
             if (input.equals("back")) {
-                if (url.size() <= 1) {
+                if (url.size() <= 1) {      //проверка дали в стека има един или николко елемента->не може да се върнем на предишна стратица
                     System.out.println("no previous URLs");
                     input = scanner.nextLine();
                     continue;
                 } else {
                     url.pop();
                 }
-            } else {
+            } else {                        //добавя елемента в стека
                 url.push(input);
             }
 
-            System.out.println(url.peek());
+            System.out.println(url.peek()); //принтираме последния добавен елемент от стека->текущото състояние
             input = scanner.nextLine();
         }
 
