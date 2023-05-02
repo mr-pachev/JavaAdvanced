@@ -17,7 +17,7 @@ public class _06_HotPotato {
         }
 
         while (hotPotato.size() > 1) {              //цикъл докато остане само едно дете в опашката
-           
+
             for (int i = 1; i < jump; i++) {        //пренарежда децата в опошката според броя на хвърлянията->с едно завъртане по-малко
                 String currentKids = hotPotato.peek();
                 hotPotato.poll();
@@ -25,6 +25,6 @@ public class _06_HotPotato {
             }
             System.out.println("Removed " + hotPotato.poll());
         }
-        System.out.println("Last in " + hotPotato.peek());
+        System.out.println("Last is " + hotPotato.peek());
     }
 }
