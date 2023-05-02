@@ -14,7 +14,7 @@ public class _01_BrowserHistory {
         while (!input.equals("Home")) {
 
             if (input.equals("back")) {
-                if (url.size() <= 1) {      //проверка дали в стека има един или николко елемента->не може да се върнем на предишна стратица
+                if (url.size() <= 1) {      //проверка дали в стека има един елемент->не може да се върнем на предишна стратица
                     System.out.println("no previous URLs");
                     input = scanner.nextLine();
                     continue;
