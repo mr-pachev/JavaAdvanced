@@ -12,6 +12,7 @@ public class _01_PoisonousPlants {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(reader.readLine());
+
         String[] tokens = reader.readLine().split(" ");
         int[] plants = new int[n];
 
@@ -29,11 +30,13 @@ public class _01_PoisonousPlants {
             while (!indices.isEmpty() && plants[indices.peek()] >= plants[i]) {
                 maxDays = Math.max(maxDays, days[indices.pop()]);
             }
+
             if (!indices.isEmpty()) {
                 days[i] = maxDays + 1;
             }
             indices.push(i);
         }
+
         System.out.println(getLastDay(days));
     }
 

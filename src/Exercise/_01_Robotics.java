@@ -9,6 +9,7 @@ public class _01_Robotics {
         Scanner scanner = new Scanner(System.in);
 
         String[] input = scanner.nextLine().split(";");
+
         String[] robots = new String[input.length];
         int[] processTime = new int[input.length];
         int[] worktime = new int[input.length];
@@ -57,7 +58,7 @@ public class _01_Robotics {
                 }
             }
 
-            if (!isWorking) { //ako ima svoboden
+            if (!isWorking) { 
                 products.offer(product);
             }
         }
