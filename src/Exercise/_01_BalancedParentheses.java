@@ -23,14 +23,18 @@ public class _01_BalancedParentheses {
                 parentheses.push(currentBracket);
 
             } else if (currentBracket.equals("}") || currentBracket.equals("]") || currentBracket.equals(")")) {
-                if (parentheses.peek().equals("{") && currentBracket.equals("}")) {
-                    parentheses.pop();
+
+                if (parentheses.isEmpty()) { //проверка пдали стека ни е празен, защото следващите операции са POP
+                    isBalanced = false;
+                    break;
+                }
+                String lastOpen = parentheses.pop();
+
+                if (currentBracket.equals("}") && lastOpen.equals("{")) {
                     isBalanced = true;
-                } else if (parentheses.peek().equals("[") && currentBracket.equals("]")) {
-                    parentheses.pop();
+                } else if (currentBracket.equals("]") && lastOpen.equals("[")) {
                     isBalanced = true;
-                } else if (parentheses.peek().equals("(") && currentBracket.equals(")")) {
-                    parentheses.pop();
+                } else if (currentBracket.equals(")") && lastOpen.equals("(")) {
                     isBalanced = true;
                 } else {
                     isBalanced = false;
@@ -38,9 +42,10 @@ public class _01_BalancedParentheses {
                 }
             }
         }
-        if (isBalanced){
+
+        if (isBalanced) {
             System.out.println("YES");
-        }else {
+        } else {
             System.out.println("NO");
         }
 
