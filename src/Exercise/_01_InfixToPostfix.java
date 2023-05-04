@@ -6,22 +6,28 @@ import java.util.ArrayDeque;
 
 public class _01_InfixToPostfix {
     public static void main(String[] args) throws IOException {
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
         String[] tokens = reader.readLine().split(" ");
         ArrayDeque<String> operatorStack = new ArrayDeque<>();
         ArrayDeque<String> outputQueue = new ArrayDeque<>();
+
         for (String token : tokens) {
-            if (!"-+/*()".contains(token)) { //if it's a number
+            if (!"-+/*()".contains(token)) {                //проверка дали е число
                 outputQueue.offer(token);
-            } else if (token.equals("(")) {
+
+            } else if (token.equals("(")) {                 //проверка дали е отваряща скоба
                 operatorStack.push(token);
-            } else if (token.equals(")")) {
+
+            } else if (token.equals(")")) {                 //проверка дали е затваряща скоба
                 while (!operatorStack.peek().equals("(")) {
                     outputQueue.offer(operatorStack.pop());
                 }
-                operatorStack.pop(); //get rid of the left bracket
+                operatorStack.pop();
+
             } else {
-                if ("-+".contains(token)) {
+                if ("-+".contains(token)) {                 //проверка дали е оператор "-" или "+"
                     while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")) {
                         outputQueue.offer(operatorStack.pop());
                     }
@@ -30,9 +36,11 @@ public class _01_InfixToPostfix {
                         outputQueue.offer(operatorStack.pop());
                     }
                 }
-                operatorStack.push(token);
+                operatorStack.push(token);                  //пазим всичко различно от число
             }
+
         }
+
         while (!operatorStack.isEmpty()) {
             outputQueue.offer(operatorStack.pop());
         }
