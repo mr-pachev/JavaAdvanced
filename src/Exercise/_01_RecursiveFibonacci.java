@@ -1,21 +1,30 @@
 package Exercise;
 
+import java.util.ArrayDeque;
 import java.util.Scanner;
 
 public class _01_RecursiveFibonacci {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        int n = Integer.parseInt(scanner.nextLine());
+        Scanner input = new Scanner(System.in);
 
-        System.out.println(fib(n));
-
+        ArrayDeque<Long> Fibonacci = new ArrayDeque<>();
+        long N = Integer.parseInt(input.nextLine());
+        System.out.println(getFibonacci(Fibonacci, N));
     }
-    public static long fib(int n) {
 
-        if (n <= 2) {
-            return 1;
+    private static Long getFibonacci(ArrayDeque<Long> Fibonacci, Long N) {
+        if (N < 2) {
+            return 1L;
+        } else {
+            Fibonacci.offer(0L);
+            Fibonacci.offer(1L);
+            for (int i = 0; i < N; i++) {
+                long Sum = Fibonacci.poll() + Fibonacci.peek();
+                Fibonacci.offer(Sum);
+            }
         }
-        return fib(n - 1) + fib(n - 2);
+        Fibonacci.poll();
+        return Fibonacci.peek();
     }
 }
