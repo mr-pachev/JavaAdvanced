@@ -18,24 +18,24 @@ public class _01_SimpleTextEditor {
 
             if (command.equals("1")) {
                 String currentText = input.split("\\s+")[1];
+                stack.push(text.toString());        //съхраняваме текущото състояние преди модификацията в тази команда
                 text.append(currentText);
-                stack.push(text.toString());
 
             } else if (command.equals("2")) {
                 int sumErase = Integer.parseInt(input.split("\\s+")[1]);
+                stack.push(text.toString());        //съхраняваме текущото състояние преди модификацията в тази команда
                 text.delete(text.length() - sumErase, text.length());
-                stack.push(text.toString());
 
             } else if (command.equals("3")) {
                 int index = Integer.parseInt(input.split("\\s+")[1]);
                 System.out.println(text.charAt(index - 1));
             } else if (command.equals("4")) {
                 if (!stack.isEmpty()) {
-                    stack.pop();
+                    text = new StringBuilder(stack.pop());
                 }
-                text = new StringBuilder(stack.peek());
+
             }
         }
-        
+
     }
 }
