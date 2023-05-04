@@ -1,10 +1,9 @@
 package Lab;
 
-import java.util.ArrayDeque;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-public class _07_MathPotato {
+public class _01_MathPotato {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

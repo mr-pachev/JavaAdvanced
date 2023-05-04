@@ -3,7 +3,7 @@ package Lab;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
-public class _08_BrowserHistoryUpgrade {
+public class _01_BrowserHistoryUpgrade {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);

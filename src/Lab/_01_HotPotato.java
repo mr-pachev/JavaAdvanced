@@ -3,7 +3,7 @@ package Lab;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
-public class _06_HotPotato {
+public class _01_HotPotato {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

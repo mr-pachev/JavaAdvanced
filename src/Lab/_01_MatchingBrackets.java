@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class _04_MatchingBrackets {
+public class _01_MatchingBrackets {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

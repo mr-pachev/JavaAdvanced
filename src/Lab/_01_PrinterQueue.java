@@ -3,7 +3,7 @@ package Lab;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
-public class _05_PrinterQueue {
+public class _01_PrinterQueue {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

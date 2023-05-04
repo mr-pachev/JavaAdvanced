@@ -1,9 +1,8 @@
 package Lab;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class _02_SimpleCalculator {
+public class _01_SimpleCalculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 

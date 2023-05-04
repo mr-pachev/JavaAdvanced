@@ -3,7 +3,7 @@ package Lab;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
-public class _03_DecimalToBinaryConverter {
+public class _01_DecimalToBinaryConverter {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
