@@ -58,7 +58,7 @@ public class _01_Robotics {
                 }
             }
 
-            if (!isWorking) { 
+            if (!isWorking) {
                 products.offer(product);
             }
         }
