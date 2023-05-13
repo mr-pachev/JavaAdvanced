@@ -15,7 +15,7 @@ public class _02_FindTheRealQueen {
         }
 
         String queen = "q";
-        //кординати на печелинвшата кралица
+        //кординати на печелившата кралица
         int bestRow = 0;
         int bestColum = 0;
 
@@ -23,11 +23,11 @@ public class _02_FindTheRealQueen {
             for (int j = 0; j < matrix[i].length; j++) {
                 String currentSymbol = matrix[i][j];
 
-                if (currentSymbol.equals(queen)) {              //при наличие на кралица
-                    if (!isVertical(i, j, matrix)) {
+                if (currentSymbol.equals(queen)) {                              //при наличие на кралица
+                    if (isVertical(i, j, matrix)) {                            //проверява по вертикала
                         break;
                     }
-                    if (!isHorizontal(i, j, matrix)) {
+                    if (isHorizontal(i, j, matrix)) {                          //проверява по хоризонтала
                         break;
                     }
 
@@ -35,7 +35,7 @@ public class _02_FindTheRealQueen {
                     int startRow = Integer.parseInt(rowAndColum.split("")[0]);
                     int startColum = Integer.parseInt(rowAndColum.split("")[1]);
 
-                    if (!isLeftDiagonal(startRow, startColum, i, matrix)) {
+                    if (isLeftDiagonal(startRow, startColum, i, matrix)) {     //проверява по левия диагонал
                         break;
                     }
 
@@ -43,7 +43,7 @@ public class _02_FindTheRealQueen {
                     startRow = Integer.parseInt(rowAndColum.split("")[0]);
                     startColum = Integer.parseInt(rowAndColum.split("")[1]);
 
-                    if (!isRightDiagonal(startRow, startColum, i, matrix)) {
+                    if (isRightDiagonal(startRow, startColum, i, matrix)) {      //проверява по десен диагонал
                         break;
                     }
                     bestRow = i;
@@ -51,7 +51,9 @@ public class _02_FindTheRealQueen {
                 }
             }
         }
+
         System.out.printf("%d %d", bestRow, bestColum);
+
     }
 
     //метод проверка по вертикала
@@ -61,11 +63,11 @@ public class _02_FindTheRealQueen {
 
             if (i != row) {
                 if (currentSymbol.equals("q")) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     //метод проверка по хоризонтала
@@ -75,11 +77,11 @@ public class _02_FindTheRealQueen {
 
             if (j != colum) {
                 if (currentSymbol.equals("q")) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     //метод проверка по ляв диагонал
@@ -92,14 +94,14 @@ public class _02_FindTheRealQueen {
 
                 if (i != currentRow) {
                     if (currentSymbol.equals("q")) {
-                        return false;
+                        return true;
                     }
                 }
                 count++;
                 break;
             }
         }
-        return true;
+        return false;
     }
 
     //метод проверка по десен диагонал
@@ -112,14 +114,14 @@ public class _02_FindTheRealQueen {
 
                 if (i != currentRow) {
                     if (currentSymbol.equals("q")) {
-                        return false;
+                        return true;
                     }
                 }
                 count++;
                 break;
             }
         }
-        return true;
+        return false;
     }
 
     //определя началото на ляв диагонал
@@ -158,7 +160,7 @@ public class _02_FindTheRealQueen {
             return rowAndColum;
         }
 
-        while (startRow < matrix.length - 1 && startColum >= 0) {
+        while (startRow < matrix.length - 1 && startColum > 0) {
             startRow++;
             startColum--;
             rowAndColum = "" + startRow + startColum;
