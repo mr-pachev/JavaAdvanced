@@ -52,7 +52,7 @@ public class _02_FindTheRealQueen {
 
     //метод проверка по хоризонтала
     public static boolean isHorizontal(int row, int colum, char[][] matrix) {
-        for (int j = 0; j < matrix[row].length; j++) {
+        for (int j = 0; j < matrix.length; j++) {
             char currentSymbol = matrix[row][j];
 
             if (j != colum) {
@@ -67,7 +67,7 @@ public class _02_FindTheRealQueen {
     //метод проверка по ляв диагонал
     public static boolean isLeftDiagonal(int row, int colum, int currentRow, char[][] matrix) {
 
-        while (row < matrix.length - 1 && colum < matrix[row].length) {
+        while (row < matrix.length - 1 && colum < matrix.length - 1) {
             row++;
             colum++;
 
@@ -86,7 +86,7 @@ public class _02_FindTheRealQueen {
     //метод проверка по десен диагонал
     public static boolean isRightDiagonal(int row, int colum, int currentRow, char[][] matrix) {
 
-        while (row > 0 && colum < matrix[row].length) {
+        while (row > 0 && colum < matrix.length - 1) {
             row--;
             colum++;
 
