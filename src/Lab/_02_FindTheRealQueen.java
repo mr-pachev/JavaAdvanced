@@ -66,40 +66,38 @@ public class _02_FindTheRealQueen {
 
     //метод проверка по ляв диагонал
     public static boolean isLeftDiagonal(int row, int colum, int currentRow, char[][] matrix) {
-        int count = 0;
-        for (int i = row; i < matrix.length; i++) {
 
-            for (int j = colum + count; j < matrix[i].length; j++) {
-                char currentSymbol = matrix[i][j];
+        while (row < matrix.length - 1 && colum < matrix[row].length) {
+            row++;
+            colum++;
 
-                if (i != currentRow) {
-                    if (currentSymbol == 'q') {
-                        return false;
-                    }
+            char currentSymbol = matrix[row][colum];
+
+            if (row != currentRow) {
+                if (currentSymbol == 'q') {
+                    return false;
                 }
-                count++;
-                break;
             }
+
         }
         return true;
     }
 
     //метод проверка по десен диагонал
     public static boolean isRightDiagonal(int row, int colum, int currentRow, char[][] matrix) {
-        int count = 0;
-        for (int i = matrix.length - 1; i >= 0; i--) {
 
-            for (int j = colum + count; j < matrix[i].length; j++) {
-                char currentSymbol = matrix[i][j];
+        while (row > 0 && colum < matrix[row].length) {
+            row--;
+            colum++;
 
-                if (i != currentRow) {
-                    if (currentSymbol == 'q') {
-                        return false;
-                    }
+            char currentSymbol = matrix[row][colum];
+
+            if (row != currentRow) {
+                if (currentSymbol == 'q') {
+                    return false;
                 }
-                count++;
-                break;
             }
+
         }
         return true;
     }
@@ -149,7 +147,7 @@ public class _02_FindTheRealQueen {
     }
 
     //проверка за валидност на кралицата
-    public static boolean isValid (int i, int j, char[][] matrix){
+    public static boolean isValid(int i, int j, char[][] matrix) {
         if (!isVertical(i, j, matrix)) {                            //проверява по вертикала
             return false;
         }
