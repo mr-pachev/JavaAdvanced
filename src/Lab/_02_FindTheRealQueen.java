@@ -23,29 +23,7 @@ public class _02_FindTheRealQueen {
             for (int j = 0; j < matrix[i].length; j++) {
                 String currentSymbol = matrix[i][j];
 
-                if (currentSymbol.equals(queen)) {                              //при наличие на кралица
-                    if (isVertical(i, j, matrix)) {                            //проверява по вертикала
-                        break;
-                    }
-                    if (isHorizontal(i, j, matrix)) {                          //проверява по хоризонтала
-                        break;
-                    }
-
-                    String rowAndColum = isStartDiagonal(i, j, matrix);
-                    int startRow = Integer.parseInt(rowAndColum.split("")[0]);
-                    int startColum = Integer.parseInt(rowAndColum.split("")[1]);
-
-                    if (isLeftDiagonal(startRow, startColum, i, matrix)) {     //проверява по левия диагонал
-                        break;
-                    }
-
-                    rowAndColum = isStartDiagonalRight(i, j, matrix);
-                    startRow = Integer.parseInt(rowAndColum.split("")[0]);
-                    startColum = Integer.parseInt(rowAndColum.split("")[1]);
-
-                    if (isRightDiagonal(startRow, startColum, i, matrix)) {      //проверява по десен диагонал
-                        break;
-                    }
+                if (currentSymbol.equals(queen) && isValid(i, j, matrix)) {                             //при наличие на кралица
                     bestRow = i;
                     bestColum = j;
                 }
@@ -63,11 +41,11 @@ public class _02_FindTheRealQueen {
 
             if (i != row) {
                 if (currentSymbol.equals("q")) {
-                    return true;
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     //метод проверка по хоризонтала
@@ -77,11 +55,11 @@ public class _02_FindTheRealQueen {
 
             if (j != colum) {
                 if (currentSymbol.equals("q")) {
-                    return true;
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     //метод проверка по ляв диагонал
@@ -94,14 +72,14 @@ public class _02_FindTheRealQueen {
 
                 if (i != currentRow) {
                     if (currentSymbol.equals("q")) {
-                        return true;
+                        return false;
                     }
                 }
                 count++;
                 break;
             }
         }
-        return false;
+        return true;
     }
 
     //метод проверка по десен диагонал
@@ -114,14 +92,14 @@ public class _02_FindTheRealQueen {
 
                 if (i != currentRow) {
                     if (currentSymbol.equals("q")) {
-                        return true;
+                        return false;
                     }
                 }
                 count++;
                 break;
             }
         }
-        return false;
+        return true;
     }
 
     //определя началото на ляв диагонал
@@ -166,5 +144,32 @@ public class _02_FindTheRealQueen {
             rowAndColum = "" + startRow + startColum;
         }
         return rowAndColum;
+    }
+
+    //проверка за валидност на кралицата
+    public static boolean isValid (int i, int j, String[][] matrix){
+        if (!isVertical(i, j, matrix)) {                            //проверява по вертикала
+            return false;
+        }
+        if (!isHorizontal(i, j, matrix)) {                          //проверява по хоризонтала
+            return false;
+        }
+
+        String rowAndColum = isStartDiagonal(i, j, matrix);
+        int startRow = Integer.parseInt(rowAndColum.split("")[0]);
+        int startColum = Integer.parseInt(rowAndColum.split("")[1]);
+
+        if (!isLeftDiagonal(startRow, startColum, i, matrix)) {     //проверява по левия диагонал
+            return false;
+        }
+
+        rowAndColum = isStartDiagonalRight(i, j, matrix);
+        startRow = Integer.parseInt(rowAndColum.split("")[0]);
+        startColum = Integer.parseInt(rowAndColum.split("")[1]);
+
+        if (!isRightDiagonal(startRow, startColum, i, matrix)) {      //проверява по десен диагонал
+            return false;
+        }
+        return true;
     }
 }
