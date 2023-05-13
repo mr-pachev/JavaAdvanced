@@ -6,24 +6,26 @@ public class _02_FindTheRealQueen {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        String[][] matrix = new String[8][];
+        char[][] matrix = new char[8][8];
 
         //запълване на матрицата
         for (int i = 0; i < matrix.length; i++) {
-            String[] symbols = scanner.nextLine().split(" ");
-            matrix[i] = symbols;
+            String[] input = scanner.nextLine().split(" ");
+            for (int j = 0; j < matrix.length; j++) {
+                matrix[i][j] = input[j].charAt(0);
+            }
         }
 
-        String queen = "q";
-        //кординати на печелившата кралица
+        char queen = 'q';
+        //кординати на валидната кралица
         int bestRow = 0;
         int bestColum = 0;
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
-                String currentSymbol = matrix[i][j];
+                char currentSymbol = matrix[i][j];
 
-                if (currentSymbol.equals(queen) && isValid(i, j, matrix)) {                             //при наличие на кралица
+                if (currentSymbol == queen && isValid(i, j, matrix)) {        //при наличие на кралица
                     bestRow = i;
                     bestColum = j;
                 }
@@ -35,12 +37,12 @@ public class _02_FindTheRealQueen {
     }
 
     //метод проверка по вертикала
-    public static boolean isVertical(int row, int colum, String[][] matrix) {
+    public static boolean isVertical(int row, int colum, char[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
-            String currentSymbol = matrix[i][colum];
+            char currentSymbol = matrix[i][colum];
 
             if (i != row) {
-                if (currentSymbol.equals("q")) {
+                if (currentSymbol == 'q') {
                     return false;
                 }
             }
@@ -49,12 +51,12 @@ public class _02_FindTheRealQueen {
     }
 
     //метод проверка по хоризонтала
-    public static boolean isHorizontal(int row, int colum, String[][] matrix) {
+    public static boolean isHorizontal(int row, int colum, char[][] matrix) {
         for (int j = 0; j < matrix[row].length; j++) {
-            String currentSymbol = matrix[row][j];
+            char currentSymbol = matrix[row][j];
 
             if (j != colum) {
-                if (currentSymbol.equals("q")) {
+                if (currentSymbol == 'q') {
                     return false;
                 }
             }
@@ -63,15 +65,15 @@ public class _02_FindTheRealQueen {
     }
 
     //метод проверка по ляв диагонал
-    public static boolean isLeftDiagonal(int row, int colum, int currentRow, String[][] matrix) {
+    public static boolean isLeftDiagonal(int row, int colum, int currentRow, char[][] matrix) {
         int count = 0;
         for (int i = row; i < matrix.length; i++) {
 
             for (int j = colum + count; j < matrix[i].length; j++) {
-                String currentSymbol = matrix[i][j];
+                char currentSymbol = matrix[i][j];
 
                 if (i != currentRow) {
-                    if (currentSymbol.equals("q")) {
+                    if (currentSymbol == 'q') {
                         return false;
                     }
                 }
@@ -83,15 +85,15 @@ public class _02_FindTheRealQueen {
     }
 
     //метод проверка по десен диагонал
-    public static boolean isRightDiagonal(int row, int colum, int currentRow, String[][] matrix) {
+    public static boolean isRightDiagonal(int row, int colum, int currentRow, char[][] matrix) {
         int count = 0;
         for (int i = matrix.length - 1; i >= 0; i--) {
 
             for (int j = colum + count; j < matrix[i].length; j++) {
-                String currentSymbol = matrix[i][j];
+                char currentSymbol = matrix[i][j];
 
                 if (i != currentRow) {
-                    if (currentSymbol.equals("q")) {
+                    if (currentSymbol == 'q') {
                         return false;
                     }
                 }
@@ -103,7 +105,7 @@ public class _02_FindTheRealQueen {
     }
 
     //определя началото на ляв диагонал
-    public static String isStartDiagonal(int row, int colum, String[][] matrix) {
+    public static String isStartDiagonal(int row, int colum, char[][] matrix) {
         int startRow = row;
         int startColum = colum;
         String rowAndColum = "" + row + colum;
@@ -124,7 +126,7 @@ public class _02_FindTheRealQueen {
     }
 
     //определя началото на десен диагонал
-    public static String isStartDiagonalRight(int row, int colum, String[][] matrix) {
+    public static String isStartDiagonalRight(int row, int colum, char[][] matrix) {
         int startRow = row;
         int startColum = colum;
         String rowAndColum = "" + row + colum;
@@ -147,7 +149,7 @@ public class _02_FindTheRealQueen {
     }
 
     //проверка за валидност на кралицата
-    public static boolean isValid (int i, int j, String[][] matrix){
+    public static boolean isValid (int i, int j, char[][] matrix){
         if (!isVertical(i, j, matrix)) {                            //проверява по вертикала
             return false;
         }
