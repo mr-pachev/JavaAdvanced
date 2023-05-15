@@ -14,6 +14,7 @@ public class _02_MaximalSum {
         isFillMatrix(matrix, scanner);
 
         int maxSum = Integer.MIN_VALUE;
+        int[][] winMatrix = new int[3][3];
         int currentSum = 0;
 
         for (int i = 0; i < matrix.length; i++) {
@@ -22,12 +23,13 @@ public class _02_MaximalSum {
                     currentSum = isSumMatrix(matrix, i, j);
                     if (currentSum >= maxSum) {
                         maxSum = currentSum;
+                        isFillWinMatrix(matrix, winMatrix, i, j);
                     }
                 }
             }
         }
         System.out.printf("Sum = %d%n", maxSum);
-        printMatrix(matrix);
+        printMatrix(winMatrix);
     }
 
     public static void isFillMatrix(int[][] matrix, Scanner scanner) {
@@ -38,11 +40,24 @@ public class _02_MaximalSum {
         }
     }
 
+    public static void isFillWinMatrix(int[][] matrix, int[][] winMatrix, int startRow, int startCol) {
+
+        int endRow = startRow + 3;
+        int endCol = startCol + 3;
+        for (int row = startRow,  i = 0; row < endRow; row++, i++) {
+            for (int col = startCol, j = 0; col < endCol; col++, j++) {
+                winMatrix[i][j] = matrix[row][col];
+            }
+        }
+    }
+
     //сумиране на елементите в матрица 3x3
     public static int isSumMatrix(int[][] matrix, int startRow, int startCol) {
         int sum = 0;
-        for (int row = startRow; row < startRow + 3; row++) {
-            for (int col = startCol; col < startCol + 3; col++) {
+        int endRow = startRow + 3;
+        int endCol = startCol + 3;
+        for (int row = startRow; row < endRow; row++) {
+            for (int col = startCol; col < endCol; col++) {
                 sum += matrix[row][col];
             }
         }
