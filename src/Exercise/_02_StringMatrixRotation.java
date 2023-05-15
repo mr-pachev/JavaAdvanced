@@ -66,7 +66,7 @@ public class _02_StringMatrixRotation {
     public static char[][] isRotate(char[][] matrix, int i, int j) {
         char[][] rotateMatrix = new char[j][i];
         for (int col = 0; col < j; col++) {
-            int count = -1;
+            int count = -1;                 //помага за новото запълване на колоните на матрицата
             for (int row = matrix.length - 1; row >= 0; row--) {
                 count++;
                 rotateMatrix[col][count] = matrix[row][col];
