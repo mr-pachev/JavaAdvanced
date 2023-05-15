@@ -19,7 +19,8 @@ public class _02_FillTheMatrix {
         if (type.equals("B")){
             isTypeB(matrix, n);
         }
-        System.out.println();
+        
+        printMatrix(matrix);
     }
 
     public static void isTypeA(int[][] matrix, int n) {
@@ -50,6 +51,15 @@ public class _02_FillTheMatrix {
                 }
             }
 
+        }
+    }
+
+    private static void printMatrix(int[][] matrix) {
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < matrix[0].length; col++) {
+                System.out.print(matrix[row][col] + " ");
+            }
+            System.out.println(); //свали курсора на следващия ред
         }
     }
 }
