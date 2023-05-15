@@ -19,7 +19,7 @@ public class _02_FillTheMatrix {
         if (type.equals("B")){
             isTypeB(matrix, n);
         }
-        
+
         printMatrix(matrix);
     }
 
