@@ -21,7 +21,7 @@ public class _02_MaximalSum {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (i <= matrix.length - 3 && j <= matrix[i].length - 3) {
                     currentSum = isSumMatrix(matrix, i, j);
-                    if (currentSum >= maxSum) {
+                    if (currentSum > maxSum) {
                         maxSum = currentSum;
                         isFillWinMatrix(matrix, winMatrix, i, j);
                     }
