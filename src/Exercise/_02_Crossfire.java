@@ -78,7 +78,9 @@ public class _02_Crossfire {
     private static void printMatrix(String[][] matrix) {
         for (int row = 0; row < matrix.length; row++) {
             for (int col = 0; col < matrix[0].length; col++) {
-                System.out.print(matrix[row][col] + " ");
+                if (!matrix[row][col].equals(" ")) {
+                    System.out.print(matrix[row][col] + " ");
+                }
             }
             System.out.println(); //свали курсора на следващия ред
         }
