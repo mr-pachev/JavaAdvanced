@@ -24,22 +24,58 @@ public class _02_Crossfire {
             int colPoint = Integer.parseInt(input.split(" ")[1]);
             int radius = Integer.parseInt(input.split(" ")[2]);
 
-            for (int row = rowPoint - radius; row < rowPoint + radius; row++) {
-                if (isValid(matrix, row, colPoint)) {
-                    matrix.get(row).remove(colPoint);
+            int colStart = colPoint - radius; //начална точка от конкретния List за премахване по хоризонтала
+            int colEnd = colPoint + radius;   //крайна точка от конкретния List за премахване по хоризонтала
+            int rowStart = rowPoint - radius; //начален реда от, който ще започне премахване по вертикала
+            int rowEnd = rowPoint + radius;   //краен реда до, който ще се премахва по вертикала
+
+            //премахване наляво
+            if (isValid(matrix, rowPoint, colStart)){
+                for (int col = colStart; col <= colPoint; col++) {
+                    matrix.get(rowPoint).set(col, 0);
+                }
+            }else {
+                for (int col = 0; col <= colPoint; col++) {
+                    matrix.get(rowPoint).set(col, 0);
                 }
             }
-            for (int col = colPoint - radius; col < colPoint + radius; col++) {
-                if (isValid(matrix, rowPoint, col)) {
-                    int currentElement = matrix.get(rowPoint).get(col);
-                    matrix.get(rowPoint).remove(col);
-                }
 
+            //премахване надясно
+            if (isValid(matrix, rowPoint, colEnd)){
+                for (int col = colPoint+1; col <= colEnd; col++) {
+                    matrix.get(rowPoint).set(col, 0);
+                }
+            }else {
+                for (int col = colPoint+1; col < matrix.get(rowPoint).size(); col++) {
+                    matrix.get(rowPoint).set(col, 0);
+                }
             }
 
-            matrix.removeIf(List::isEmpty);
+            //премахване нагоре
+            if (isValid(matrix, rowPoint, rowStart)){
+                for (int row = rowStart; row <= rowPoint; row++) {
+                    matrix.get(row).set(colPoint, 0);
+                }
+            }else {
+                for (int row = 0; row <= rowPoint; row++) {
+                    matrix.get(row).set(colPoint, 0);
+                }
+            }
+
+            //премахване надолу
+            if (isValid(matrix, rowPoint, rowEnd)){
+                for (int row = rowEnd - 1; row > rowPoint; row--) {
+                    matrix.get(row).set(colPoint, 0);
+                }
+            }else {
+                for (int row = matrix.size() - 1; row > rowPoint; row--) {
+                    matrix.get(row).set(colPoint, 0);
+                }
+            }
+
             input = scanner.nextLine();
         }
+
         printMatrix(matrix, rowInput);
     }
 
@@ -58,13 +94,21 @@ public class _02_Crossfire {
 
     //валидация на конкретната позиция от реда и колоната за премахване на елемент
     public static boolean isValid(List<List<Integer>> matrix, int row, int col) {
-        return (row >= 0 && row < matrix.size() &&  col >= 0 && col < matrix.get(row).size());
+        return (row >= 0 && row < matrix.size() && col >= 0 && col < matrix.get(row).size());
     }
+
 
     //принтиран на матрица
     private static void printMatrix(List<List<Integer>> matrix, int rows) {
         for (int row = 0; row < rows; row++) {
             List<Integer> colList = matrix.get(row);
+            for (int col = 0; col < matrix.get(row).size(); col++) {
+
+                if (colList.get(col) == 0){
+                    colList.remove(col);
+                }
+
+            }
             System.out.println(colList.toString().replaceAll("[\\[\\],]", ""));
         }
     }
