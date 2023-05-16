@@ -1,5 +1,7 @@
 package Exercise;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class _02_Crossfire {
@@ -11,78 +13,60 @@ public class _02_Crossfire {
         int rowInput = Integer.parseInt(input.split(" ")[0]);
         int colInput = Integer.parseInt(input.split(" ")[1]);
 
-        String[][] matrix = new String[rowInput][colInput];
+        List<List<Integer>> matrix = new ArrayList<>();
 
-        fillMatrix(matrix);
+        fillMatrix(matrix, rowInput, colInput);
 
         input = scanner.nextLine();
 
         while (!input.equals("Nuke it from orbit")) {
-            int rowLength = Integer.parseInt(input.split(" ")[0]);
-            int colLength = Integer.parseInt(input.split(" ")[1]);
+            int rowPoint = Integer.parseInt(input.split(" ")[0]);
+            int colPoint = Integer.parseInt(input.split(" ")[1]);
             int radius = Integer.parseInt(input.split(" ")[2]);
 
-            removeElementColLeft(matrix, rowLength, colLength, radius);
-            removeElementColRight(matrix, rowLength, colLength, radius);
-            removeElementRowUp(matrix, rowLength, colLength, radius);
-            removeElementRowDown(matrix, rowLength, colLength, radius);
+            for (int row = rowPoint - radius; row < rowPoint + radius; row++) {
+                if (isValid(matrix, row, colPoint)) {
+                    matrix.get(row).remove(colPoint);
+                }
+            }
+            for (int col = colPoint - radius; col < colPoint + radius; col++) {
+                if (isValid(matrix, rowPoint, col)) {
+                    int currentElement = matrix.get(rowPoint).get(col);
+                    matrix.get(rowPoint).remove(col);
+                }
 
+            }
+
+            matrix.removeIf(List::isEmpty);
             input = scanner.nextLine();
         }
-        printMatrix(matrix);
+        printMatrix(matrix, rowInput);
     }
 
-    private static void fillMatrix(String[][] matrix) {
+    //запълване на матрицата
+    private static void fillMatrix(List<List<Integer>> matrix, int row, int col) {
         int element = 0;
-        for (int row = 0; row < matrix.length; row++) {
-            for (int col = 0; col < matrix.length; col++) {
+        for (int i = 0; i < row; i++) {
+            List<Integer> rowList = new ArrayList<>();
+            for (int j = 0; j < col; j++) {
                 element++;
-                matrix[row][col] = "" + element;
+                rowList.add(element);
             }
+            matrix.add(rowList);
         }
     }
 
-    public static void removeElementColLeft(String[][] matrix, int pointRow, int pointCol, int radius) {
-        int currentCol = pointCol;
-        while (currentCol >= pointCol - radius && currentCol >= 0) {
-            matrix[pointRow][currentCol] = " ";
-            currentCol--;
-        }
-    }
-
-    public static void removeElementColRight(String[][] matrix, int pointRow, int pointCol, int radius) {
-        int currentCol = pointCol;
-        while (currentCol <= pointCol + radius && currentCol < matrix[pointRow].length) {
-            matrix[pointRow][currentCol] = " ";
-            currentCol++;
-        }
-    }
-
-    public static void removeElementRowUp(String[][] matrix, int pointRow, int pointCol, int radius) {
-        int currentRow = pointRow;
-        while (currentRow >= pointRow - radius && currentRow >= 0) {
-            matrix[currentRow][pointCol] = " ";
-            currentRow--;
-        }
-    }
-
-    public static void removeElementRowDown(String[][] matrix, int pointRow, int pointCol, int radius) {
-        int currentRow = pointRow;
-        while (currentRow <= pointRow + radius && currentRow < matrix.length) {
-            matrix[currentRow][pointCol] = " ";
-            currentRow++;
-        }
+    //валидация на конкретната позиция от реда и колоната за премахване на елемент
+    public static boolean isValid(List<List<Integer>> matrix, int row, int col) {
+        return (row >= 0 && row < matrix.size() &&  col >= 0 && col < matrix.get(row).size());
     }
 
     //принтиран на матрица
-    private static void printMatrix(String[][] matrix) {
-        for (int row = 0; row < matrix.length; row++) {
-            for (int col = 0; col < matrix[0].length; col++) {
-                if (!matrix[row][col].equals(" ")) {
-                    System.out.print(matrix[row][col] + " ");
-                }
-            }
-            System.out.println(); //свали курсора на следващия ред
+    private static void printMatrix(List<List<Integer>> matrix, int rows) {
+        for (int row = 0; row < rows; row++) {
+            List<Integer> colList = matrix.get(row);
+            System.out.println(colList.toString().replaceAll("[\\[\\],]", ""));
         }
     }
+
 }
