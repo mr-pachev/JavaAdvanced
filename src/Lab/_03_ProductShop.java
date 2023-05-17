@@ -33,7 +33,7 @@ public class _03_ProductShop {
         }
 
         for (Map.Entry<String, List<String>> entry : shopMap.entrySet()) {
-            System.out.printf("%s -> %n", entry.getKey());
+            System.out.printf("%s->%n", entry.getKey());
 
             int count = 0;
             for (int i = 0; i < entry.getValue().size(); i++) {
