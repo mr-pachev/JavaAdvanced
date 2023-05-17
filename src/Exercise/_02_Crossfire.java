@@ -1,116 +1,139 @@
 package Exercise;
 
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Scanner;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class _02_Crossfire {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+//public static void main(String[] args) throws IOException {
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//
+//        String[] dimensions = reader.readLine().split(" ");
+//        rows = Integer.parseInt(dimensions[0]);
+//        cols = Integer.parseInt(dimensions[1]);
+//
+//        int counter = 1;
+//        matrix = new ArrayList<>();
+//
+//        for (int row = 0; row < rows; row++) {
+//            matrix.add(new ArrayList<>());
+//            for (int col = 0; col < cols; col++) {
+//                matrix.get(row).add(counter++);
+//            }
+//        }
+//
+//        String input;
+//
+//        while (!"Nuke it from orbit".equals(input = reader.readLine())) {
+//            String[] tokens = input.split(" ");
+//            int targetRow = Integer.parseInt(tokens[0]);
+//            int targetCol = Integer.parseInt(tokens[1]);
+//            int radius = Integer.parseInt(tokens[2]);
+//
+//            int rowStart = Math.max(0, targetRow - radius);
+//            int rowEnd = Math.min(rows - 1, targetRow + radius);
+//            int colStart = Math.max(0, targetCol - radius);
+//            int colEnd = Math.min(cols - 1, targetCol + radius);
+//
+//            for (int col = colStart; col <= colEnd; col++) {
+//                if (inRange(targetRow, col)) {
+//                    matrix.get(targetRow).set(col, 0);
+//                }
+//            }
+//            for (int row = rowStart; row <= rowEnd; row++) {
+//                if (inRange(row, targetCol)) {
+//                    matrix.get(row).set(targetCol, 0);
+//                }
+//            }
+//            matrix.forEach(row -> row.removeIf(value -> value == 0));
+//            matrix.removeIf(List::isEmpty);
+//        }
+//        System.out.println(getMatrixString());
+//
+//    }
+//
+//    private static String getMatrixString() {
+//        StringBuilder output = new StringBuilder();
+//        for (List<Integer> row : matrix) {
+//            output.append(row.toString().replaceAll("[\\[\\],]", ""));
+//            output.append(System.lineSeparator());
+//        }
+//        return output.toString();
+//    }
+//
+//    private static boolean inRange(int row, int col) {
+//        return row >= 0 && row < matrix.size() &&
+//                col >= 0 && col < matrix.get(row).size();
+//    }
 
-        String input = scanner.nextLine();
+    private static int rows, cols;
+    private static List<List<Integer>> matrix;
 
-        int rowInput = Integer.parseInt(input.split(" ")[0]);
-        int colInput = Integer.parseInt(input.split(" ")[1]);
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        List<List<Integer>> matrix = new ArrayList<>();
+        String[] dimensions = reader.readLine().split(" ");
+        rows = Integer.parseInt(dimensions[0]);
+        cols = Integer.parseInt(dimensions[1]);
 
-        fillMatrix(matrix, rowInput, colInput);
+        int counter = 1;
+        matrix = new ArrayList<>();
 
-        input = scanner.nextLine();
-
-        while (!input.equals("Nuke it from orbit")) {
-            int rowPoint = Integer.parseInt(input.split(" ")[0]);
-            int colPoint = Integer.parseInt(input.split(" ")[1]);
-            int radius = Integer.parseInt(input.split(" ")[2]);
-
-            int colStart = colPoint - radius; //начална точка от конкретния List за премахване по хоризонтала
-            int colEnd = colPoint + radius;   //крайна точка от конкретния List за премахване по хоризонтала
-            int rowStart = rowPoint - radius; //начален реда от, който ще започне премахване по вертикала
-            int rowEnd = rowPoint + radius;   //краен реда до, който ще се премахва по вертикала
-
-            //премахване наляво
-            if (isValid(matrix, rowPoint, colStart)){
-                for (int col = colStart; col <= colPoint; col++) {
-                    matrix.get(rowPoint).set(col, 0);
-                }
-            }else {
-                for (int col = 0; col <= colPoint; col++) {
-                    matrix.get(rowPoint).set(col, 0);
-                }
-            }
-
-            //премахване надясно
-            if (isValid(matrix, rowPoint, colEnd)){
-                for (int col = colPoint+1; col <= colEnd; col++) {
-                    matrix.get(rowPoint).set(col, 0);
-                }
-            }else {
-                for (int col = colPoint+1; col < matrix.get(rowPoint).size(); col++) {
-                    matrix.get(rowPoint).set(col, 0);
-                }
-            }
-
-            //премахване нагоре
-            if (isValid(matrix, rowPoint, rowStart)){
-                for (int row = rowStart; row <= rowPoint; row++) {
-                    matrix.get(row).set(colPoint, 0);
-                }
-            }else {
-                for (int row = 0; row <= rowPoint; row++) {
-                    matrix.get(row).set(colPoint, 0);
-                }
-            }
-
-            //премахване надолу
-            if (isValid(matrix, rowPoint, rowEnd)){
-                for (int row = rowEnd - 1; row > rowPoint; row--) {
-                    matrix.get(row).set(colPoint, 0);
-                }
-            }else {
-                for (int row = matrix.size() - 1; row > rowPoint; row--) {
-                    matrix.get(row).set(colPoint, 0);
-                }
-            }
-
-            input = scanner.nextLine();
-        }
-
-        printMatrix(matrix, rowInput);
-    }
-
-    //запълване на матрицата
-    private static void fillMatrix(List<List<Integer>> matrix, int row, int col) {
-        int element = 0;
-        for (int i = 0; i < row; i++) {
-            List<Integer> rowList = new ArrayList<>();
-            for (int j = 0; j < col; j++) {
-                element++;
-                rowList.add(element);
-            }
-            matrix.add(rowList);
-        }
-    }
-
-    //валидация на конкретната позиция от реда и колоната за премахване на елемент
-    public static boolean isValid(List<List<Integer>> matrix, int row, int col) {
-        return (row >= 0 && row < matrix.size() && col >= 0 && col < matrix.get(row).size());
-    }
-
-
-    //принтиран на матрица
-    private static void printMatrix(List<List<Integer>> matrix, int rows) {
         for (int row = 0; row < rows; row++) {
-            List<Integer> colList = matrix.get(row);
-            for (int col = 0; col < matrix.get(row).size(); col++) {
-
-                if (colList.get(col) == 0){
-                    colList.remove(col);
-                }
-
+            matrix.add(new ArrayList<>());
+            for (int col = 0; col < cols; col++) {
+                matrix.get(row).add(counter++);
             }
-            System.out.println(colList.toString().replaceAll("[\\[\\],]", ""));
         }
+
+        String input;
+
+        while (!"Nuke it from orbit".equals(input = reader.readLine())) {
+            String[] tokens = input.split(" ");
+            int targetRow = Integer.parseInt(tokens[0]);
+            int targetCol = Integer.parseInt(tokens[1]);
+            int radius = Integer.parseInt(tokens[2]);
+
+            int rowStart = Math.max(0, targetRow - radius);
+            int rowEnd = Math.min(rows - 1, targetRow + radius);
+            int colStart = Math.max(0, targetCol - radius);
+            int colEnd = Math.min(cols - 1, targetCol + radius);
+
+            for (int col = colStart; col <= colEnd; col++) {
+                if (inRange(targetRow, col)) {
+                    matrix.get(targetRow).set(col, 0);
+                }
+            }
+            for (int row = rowStart; row <= rowEnd; row++) {
+                if (inRange(row, targetCol)) {
+                    matrix.get(row).set(targetCol, 0);
+                }
+            }
+            matrix.forEach(row -> row.removeIf(value -> value == 0));
+            matrix.removeIf(List::isEmpty);
+        }
+        System.out.println(getMatrixString());
+
+    }
+
+    private static String getMatrixString() {
+        StringBuilder output = new StringBuilder();
+        for (List<Integer> row : matrix) {
+            output.append(row.toString().replaceAll("[\\[\\],]", ""));
+            output.append(System.lineSeparator());
+        }
+        return output.toString();
+    }
+
+    private static boolean inRange(int row, int col) {
+        return row >= 0 && row < matrix.size() &&
+                col >= 0 && col < matrix.get(row).size();
     }
 
 }
