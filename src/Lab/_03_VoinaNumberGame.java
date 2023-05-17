@@ -16,35 +16,42 @@ public class _03_VoinaNumberGame {
                 .toArray();
 
         Set<Integer> firstPlayerSet = new LinkedHashSet<>();
-        isEntry(firstPlayerSet, firstPlayerCards);
+        //пълнене на първия Set
+        for (int i = 0; i < firstPlayerCards.length; i++) {
+            firstPlayerSet.add(firstPlayerCards[i]);
+        }
+
         Set<Integer> secondPlayerSet = new LinkedHashSet<>();
-        isEntry(secondPlayerSet, secondPlayerCards);
+        //пълнене на втория Set
+        for (int i = 0; i < secondPlayerCards.length; i++) {
+            secondPlayerSet.add(secondPlayerCards[i]);
+        }
 
-        int round = 0;
 
-        while (!firstPlayerSet.isEmpty() && !secondPlayerSet.isEmpty() && round <= 50) {
+        for (int round = 1; round <= 50; round++) {             //играта е 50 рунда
+
+            if (firstPlayerSet.isEmpty()) {                     //проверка дали първия играч има карти
+                break;
+            } else if (secondPlayerSet.isEmpty()) {             //проверка дали първия играч има карти
+                break;
+            }
 
             int cardFirstPlayer = firstPlayerSet.iterator().next();
             int cardSecondPlayer = secondPlayerSet.iterator().next();
 
+            //премахване на текущата карта от всяко тесте
+            firstPlayerSet.remove(cardFirstPlayer);
+            secondPlayerSet.remove(cardSecondPlayer);
+
             if (cardFirstPlayer > cardSecondPlayer) {
-                //премахване на текущата карта от всяко тесте
-                firstPlayerSet.remove(cardFirstPlayer);
-                secondPlayerSet.remove(cardSecondPlayer);
-
                 //добавяне в тестето на печелившия играч
-                firstPlayerSet.add(cardFirstPlayer);      //добавя се първо печелившата карта
+                firstPlayerSet.add(cardFirstPlayer);              //добавя се първо печелившата карта
                 firstPlayerSet.add(cardSecondPlayer);
-            } else {
-                //премахване на текущата карта от всяко тесте
-                firstPlayerSet.remove(cardFirstPlayer);
-                secondPlayerSet.remove(cardSecondPlayer);
-
+            } else if (cardFirstPlayer < cardSecondPlayer){
                 //добавяне в тестето на печелившия играч
-                secondPlayerSet.add(cardSecondPlayer);      //добавя се първо печелившата карта
                 secondPlayerSet.add(cardFirstPlayer);
+                secondPlayerSet.add(cardSecondPlayer);             //добавя се първо печелившата карта
             }
-            round++;
         }
 
         if (firstPlayerSet.size() > secondPlayerSet.size()) {
