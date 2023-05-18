@@ -21,25 +21,25 @@ public class Demo {
             int colPoint = Integer.parseInt(input.split(" ")[1]);
             int radius = Integer.parseInt(input.split(" ")[2]);
 
-            int colStart = colPoint - radius; //начална точка от конкретния List за премахване по хоризонтала
-            int colEnd = colPoint + radius;   //крайна точка от конкретния List за премахване по хоризонтала
-            int rowStart = rowPoint - radius; //начален реда от, който ще започне премахване по вертикала
-            int rowEnd = rowPoint + radius;   //краен реда до, който ще се премахва по вертикала
+            int colStartLeft = colPoint - radius; //начална точка от конкретния List за премахване по хоризонтала
+            int colEndRight = colPoint + radius;   //крайна точка от конкретния List за премахване по хоризонтала
+            int rowStartUp = rowPoint - radius; //начален реда от, който ще започне премахване по вертикала
+            int rowEndDown = rowPoint + radius;   //краен реда до, който ще се премахва по вертикала
 
             //премахване наляво
-            if (isValid(matrix, rowPoint, colStart)) {
-                for (int col = colStart; col <= colPoint; col++) {
+            if (isValid(matrix, rowPoint, colStartLeft)) {
+                for (int col = colStartLeft; col <= colPoint; col++) {
                     matrix.get(rowPoint).set(col, 0);
                 }
             } else {
-                for (int col = 0; col <= colPoint; col++) {
+                for (int col = 0; col < colPoint; col++) {
                     matrix.get(rowPoint).set(col, 0);
                 }
             }
 
             //премахване надясно
-            if (isValid(matrix, rowPoint, colEnd)) {
-                for (int col = colPoint + 1; col <= colEnd; col++) {
+            if (isValid(matrix, rowPoint, colEndRight)) {
+                for (int col = colPoint + 1; col <= colEndRight; col++) {
                     matrix.get(rowPoint).set(col, 0);
                 }
             } else {
@@ -49,24 +49,32 @@ public class Demo {
             }
 
             //премахване нагоре
-            if (isValid(matrix, rowPoint, rowStart)) {
-                for (int row = rowStart; row <= rowPoint; row++) {
-                    matrix.get(row).set(colPoint, 0);
+            if (isValid(matrix, rowPoint, rowStartUp)) {
+                for (int row = rowPoint; row >= rowStartUp; row--) {
+                    if (matrix.get(row).size() > colPoint) {
+                        matrix.get(row).set(colPoint, 0);
+                    }
                 }
             } else {
-                for (int row = 0; row <= rowPoint; row++) {
-                    matrix.get(row).set(colPoint, 0);
+                for (int row = rowPoint; row >= 0; row--) {
+                    if (matrix.get(row).size() > colPoint) {
+                        matrix.get(row).set(colPoint, 0);
+                    }
                 }
             }
 
             //премахване надолу
-            if (isValid(matrix, rowPoint, rowEnd)) {
-                for (int row = rowEnd - 1; row > rowPoint; row--) {
-                    matrix.get(row).set(colPoint, 0);
+            if (isValid(matrix, rowPoint, rowEndDown)) {
+                for (int row = rowPoint; row <= rowEndDown; row++) {
+                    if (matrix.get(row).size() > colPoint) {
+                        matrix.get(row).set(colPoint, 0);
+                    }
                 }
             } else {
-                for (int row = matrix.size() - 1; row > rowPoint; row--) {
-                    matrix.get(row).set(colPoint, 0);
+                for (int row = rowPoint; row < matrix.size(); row++) {
+                    if (matrix.get(row).size() > colPoint) {
+                        matrix.get(row).set(colPoint, 0);
+                    }
                 }
             }
 
@@ -102,15 +110,9 @@ public class Demo {
         for (int row = 0; row < matrix.size(); row++) {
             List<Integer> rowList = matrix.get(row);
 
-            for (int col = 0; col < matrix.get(row).size(); col++) {
+            // Do something
+            rowList.removeIf(name -> name == 0);
 
-                for (int name : new ArrayList<Integer>(rowList)) {
-                    int a = name;
-                    if (name == 0) {
-                        rowList.remove(matrix.get(row).get(col));
-                    }
-                }
-            }
         }
     }
 
