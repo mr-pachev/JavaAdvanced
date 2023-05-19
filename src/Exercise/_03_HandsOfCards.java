@@ -11,7 +11,7 @@ public class _03_HandsOfCards {
         Map<String, Set<String>> playersCardsMap = new LinkedHashMap<>();
 
         while (!input.equals("JOKER")) {
-            Set<String> cardsSet = new LinkedHashSet<>();
+            Set<String> cardsSet = new LinkedHashSet<>();           //подсигурява дадения играч да има неповтарящи се карти
             String[] inputData = input.split("\\: ");
             String name = inputData[0];
             String[] cardsArr = inputData[1].split(", ");
@@ -35,7 +35,7 @@ public class _03_HandsOfCards {
 
 //пресмята сумата на всеки конкретен играч според уникалните му карти
     public static int isSummation(Set<String> currentSet) {
-        Map<String, Integer> symbolMap = templateMap();         //взимаме мапа с символите и конкретната им стойност
+        Map<String, Integer> symbolMap = templateMap();             //взимаме мапа с символите и конкретната им стойност
 
         int sum = 0;
         for (String s : currentSet) {                               //обхождаме картите на дадения играч
