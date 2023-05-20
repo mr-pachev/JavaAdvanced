@@ -16,10 +16,10 @@ public class _03_UserLogs {
 
         while (!input.equals("end")) {
             String ip = input.split("\\s+")[0];
-            ip = ip.split("\\=")[1];
+            ip = ip.split("=")[1];
 
             String user = input.split("\\s+")[2];
-            user = user.split("\\=")[1];
+            user = user.split("=")[1];
 
             if (!itMap.containsKey(user)) {
                 ipCountMap = new LinkedHashMap<>();
@@ -40,22 +40,27 @@ public class _03_UserLogs {
             input = scanner.nextLine();
         }
 
-        int counter = 0;                                                        //определя броя от броя ключовете на вътрешния мап
-        for (Map.Entry<String, Map<String, Integer>> entry : itMap.entrySet()) {
-            System.out.println(entry.getKey() + ":");                           //принтира ключа на основния мап
 
-            for (Map.Entry<String, Integer> entryValue : entry.getValue().entrySet()) {
-                System.out.printf("%s => ", entryValue.getKey());               //принтиране на ключа на вътрешния мап
-                counter++;
+        for (String username : itMap.keySet()) {
+            //data.keySet() -> списък с всички usernames
+            System.out.println(username + ": ");
 
-                if (counter < entry.getValue().size()) {                        //проверява дали ключа на вътрешния мап не е последен, зада изпечати стойността му със запетайка
-                    System.out.printf("%d, %n", entryValue.getValue());
+            //ip-тата на username
+            Map<String, Integer> currentIps = itMap.get(username); //map с ip-ата на дадения username
+
+            int countIps = currentIps.size(); //брой на ip-тата = брой на записите в мап
+            //currentIps: ip (key) -> count(value)
+            for (String ip : currentIps.keySet()) {
+                if (countIps == 1) {
+                    //Последното ip за отпечатване
+                    System.out.println(ip + " => " + currentIps.get(ip) + ".");
                 } else {
-                    System.out.printf("%d.%n", entryValue.getValue());
+                    //не ми е последното ip
+                    System.out.print(ip + " => " + currentIps.get(ip) + ", ");
                 }
-
+                countIps--;
             }
-
         }
+        
     }
 }
