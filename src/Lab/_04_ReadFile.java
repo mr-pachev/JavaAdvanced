@@ -13,6 +13,7 @@ public class _04_ReadFile {
         int currentByte = inputStream.read();                               //променлива, която ще държи конкретния прочетен байт от зададения път на файла с помоща на read
 
         while (currentByte > 0){                                            //докато има байтове във файла
+            char symbol = (char) currentByte;
             System.out.print(Integer.toBinaryString(currentByte) + " ");    //конвертира Integer в двойчен вис
 
             currentByte = inputStream.read();
