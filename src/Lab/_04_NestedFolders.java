@@ -10,18 +10,19 @@ public class _04_NestedFolders {
         Deque<File> filesDeque = new ArrayDeque<>();
         filesDeque.offer(folders);
 
-        List<String> fileList = new ArrayList<>();
+        List<String> fileList = new ArrayList<>();                                  //ще съдържа всички файлове и папки
 
         while (!filesDeque.isEmpty()) {
-            File currentDir = filesDeque.removeFirst();             //премахва първия елемент от опашката
+            File currentDir = filesDeque.removeFirst();                             //премахва първия елемент от опашката
 
-            if (currentDir.isDirectory()) {                         //проверка дали е папка
-                for (File file : Objects.requireNonNull(currentDir.listFiles())) {
+            if (currentDir.isDirectory()) {                                         //проверка дали е папка
+                for (File file : Objects.requireNonNull(currentDir.listFiles())) {  //обхожда опошката съдържаща папки и файлове
+
                     if (file.isDirectory()) {
-                        filesDeque.offer(file);
+                        filesDeque.offer(file);                                     //добавя елемента-папка в опошката
                     }
                 }
-                fileList.add(currentDir.getName());
+                fileList.add(currentDir.getName());                                 //добавяме файла към списъка
             }
         }
         fileList.forEach(System.out::println);
