@@ -45,6 +45,7 @@ public class ThroneConquering {
             String command = inputData[0];
             int rowS = Integer.parseInt(inputData[1]);
             int colS = Integer.parseInt(inputData[2]);
+            health--;
 
             matrix[rowS][colS] = 'S';
 
@@ -59,36 +60,41 @@ public class ThroneConquering {
             }
 
             //проверяваме дали новото място от командата е валидно
-            if (rowP < 0 || rowP >= matrix.length || colP < 0 || colP >= matrix[0].length){
-                health--;
-            }else {
+            if (rowP < 0 || rowP >= matrix.length || colP < 0 || colP >= matrix[0].length) {
+                rowP = oldRowP;
+                colP = oldColP;
+                input = scanner.nextLine();
+                continue;
+            } else {
                 matrix[oldRowP][oldColP] = '-'; //след преместването на Парис остава -
                 oldRowP = rowP;
                 oldColP = colP;
 
-                if (matrix[rowP][colP] == 'S'){
+                if (matrix[rowP][colP] == 'S') {
                     health -= 2;
 
-                    if (health <= 0){
+                    if (health <= 0) {
                         matrix[rowP][colP] = 'X';
                         rowDeadP = rowP;
                         colDeadP = colP;
                         isDead = true;
                         break;
-                    }else {
+                    } else {
                         matrix[rowP][colP] = 'P';
                     }
 
-                }else if (matrix[rowP][colP] == 'H'){
-                    health--;
+                } else if (matrix[rowP][colP] == 'H') {
                     matrix[rowP][colP] = '-';
                     break;
-                }else {
-                    health--;
+                } else {
 
-                    if (health <= 0){
+                    if (health <= 0) {
                         matrix[rowP][colP] = 'X';
-                    }else {
+                        rowDeadP = rowP;
+                        colDeadP = colP;
+                        isDead = true;
+                        break;
+                    } else {
                         matrix[rowP][colP] = 'P';
                     }
                 }
@@ -96,14 +102,15 @@ public class ThroneConquering {
             input = scanner.nextLine();
         }
 
-        if (isDead){
+        if (isDead) {
             System.out.printf("Paris died at %d;%d.%n", rowDeadP, colDeadP);
-        }else {
-            System.out.printf("Paris has successfully abducted Helen!%nEnergy left: %d%n", health);
+        } else {
+            System.out.printf("Paris has successfully abducted Helen! Energy left: %d%n", health);
         }
 
         printMatrix(matrix);
     }
+
     //принтиран на матрица
     private static void printMatrix(char[][] matrix) {
         for (int row = 0; row < matrix.length; row++) {
