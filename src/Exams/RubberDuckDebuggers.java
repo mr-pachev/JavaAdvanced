@@ -37,17 +37,28 @@ public class RubberDuckDebuggers {
         int counterBigBlueRubberDucky = 0;          //121 - 180
         int counterSmallYellowRubberDucky = 0;      //181 - 240
 
-        while (!queue.isEmpty() && ! stack.isEmpty()) {
-            int currentResult = isReduce(queue.poll(), stack.pop());
+        while (!queue.isEmpty()) {
+            int currentResult = queue.peek() * stack.peek();
 
             if (currentResult >= 0 && currentResult <= 60) {
                 counterDarthVaderDucky++;
+                queue.poll();
+                stack.pop();
             } else if (currentResult >= 61 && currentResult <= 120) {
                 counterThorDucky++;
+                queue.poll();
+                stack.pop();
             } else if (currentResult >= 121 && currentResult <= 180) {
                 counterBigBlueRubberDucky++;
+                queue.poll();
+                stack.pop();
             } else if (currentResult >= 181 && currentResult <= 240) {
                 counterSmallYellowRubberDucky++;
+                queue.poll();
+                stack.pop();
+            }else {    //задължително трябва да се завъртат опашката и стека, докато сбора от конретните ем елементи не стане <= 240
+               stack.push(stack.pop() - 2);
+               queue.offer(queue.poll());
             }
         }
         System.out.println("Congratulations, all tasks have been completed! Rubber ducks rewarded: ");
@@ -56,12 +67,5 @@ public class RubberDuckDebuggers {
         System.out.printf("Big Blue Rubber Ducky: %d%n", counterBigBlueRubberDucky);
         System.out.printf("Small Yellow Rubber Ducky: %d%n", counterSmallYellowRubberDucky);
 
-    }
-
-    public static Integer isReduce(int a, int b) {
-        while (a * b > 240) {
-            b -= 2;
-        }
-        return a * b;
     }
 }
