@@ -14,7 +14,7 @@ public class _05_PredicateForNames {
 
         String[] namesArr = scanner.nextLine().split("\\s+");
 
-        Predicate<String> isRespondLength = s -> s.length() == conditionalLength;
+        Predicate<String> isRespondLength = s -> s.length() <= conditionalLength;
         BiConsumer<String[], Predicate> printArr = (s1, s2) -> {
             Arrays.stream(s1).filter(isRespondLength).forEach(e -> System.out.println(e));
         };
