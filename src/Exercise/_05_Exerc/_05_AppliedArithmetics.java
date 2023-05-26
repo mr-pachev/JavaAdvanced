@@ -44,9 +44,11 @@ public class _05_AppliedArithmetics {
                     break;
                 case "print":
                     printList.accept(numList);
+                    System.out.println();
                     break;
             }
             input = scanner.nextLine();
         }
+
     }
 }
