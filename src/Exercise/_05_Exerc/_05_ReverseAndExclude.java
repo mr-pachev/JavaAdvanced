@@ -16,7 +16,7 @@ public class _05_ReverseAndExclude {
 
        int number = Integer.parseInt(scanner.nextLine());
 
-        Collections.sort(numList);
+        Collections.reverse(numList);
 
         Predicate<Integer> isDivision = n -> n % number != 0;
 
