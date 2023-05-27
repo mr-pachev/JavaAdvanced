@@ -8,60 +8,60 @@ public class _05_ThePartyReservationFilterModule {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        List<String> guests = Arrays.stream(scanner.nextLine().split("\\s+"))
-                .collect(Collectors.toList());
+        List<String> questsList = Arrays.stream(scanner.nextLine().split("\\s+")).collect(Collectors.toList());
+        List<String> filterList = new ArrayList<>();            //съдържа филтрираните гости(няма да присъстват в questList)
 
-        Map<String, Predicate<String>> predicateMap = new HashMap<>();
+        String input = scanner.nextLine();
 
-        String line = scanner.nextLine();
+        while (!input.equals("Print")) {
+            String[] inputData = input.split(";");
 
-        while (!line.equals("Print")) {
+            String command = inputData[0];
+            String type = inputData[1];
+            String criteria = inputData[2];
 
-            // "{command;filter type;filter parameter}
-            String[] tokens = line.split(";");
-            // Add filter; Starts with;    P
-            String name = tokens[1] + tokens[2];
+            Predicate<String> currentPredicate = null;
 
-            if (line.contains("Add")) {
-                Predicate<String> predicate;
-                switch (tokens[1]) {
-                    case "Starts with":
-                        predicate = s -> s.startsWith(tokens[2]);
-                        predicateMap.putIfAbsent(name, predicate);
-                        break;
-                    case "Ends with":
-                        predicate = s -> s.endsWith(tokens[2]);
-                        predicateMap.putIfAbsent(name, predicate);
-                        break;
-                    case "Length":
-                        predicate = s -> s.length() == Integer.parseInt(tokens[2]);
-                        predicateMap.putIfAbsent(name, predicate);
-                        break;
-                    case "Contains":
-                        predicate = s -> s.contains(tokens[2]);
-                        predicateMap.putIfAbsent(name, predicate);
-                        break;
-                }
-
-            } else { // Remove predicate
-                predicateMap.remove(name);
+            //задаване на условие
+            if (type.equals("Starts with")) {
+                currentPredicate = s -> s.startsWith(criteria);
+            } else if (type.equals("Ends with")) {
+                currentPredicate = s -> s.endsWith(criteria);
+            } else if (type.equals("Length")) {
+                currentPredicate = s -> s.length() == Integer.parseInt(criteria);
+            } else if (type.equals("Contains")) {
+                currentPredicate = s -> s.contains(criteria);
             }
 
-            line = scanner.nextLine();
+            if (command.contains("Add")) {
+                List<String> addFilterList = new ArrayList<>();     //текущ списък с хора за добавяне в списъка с филтрираните(премахнати) гости
+
+                //обхождане на листа с гости и проверка кои отговарят на УСЛОВИЕТО-филтъра
+                for (String s : questsList) {
+                    if (currentPredicate.test(s)) {
+                        addFilterList.add(s);                        //дадения гост се добавя в текущия списък за добавяне на филтрирани(премахнати) гости в основния
+                    }
+                }
+                filterList.addAll(addFilterList);
+            } else if (command.contains("Remove")) {
+                List<String> removeFilterList = new ArrayList<>();   //текущ списък с хора за премахване от списъка с филтрираните(премахнати) гости
+
+                //обхождане на листа с гости и проверка кои отговарят на УСЛОВИЕТО-филтъра
+                for (String s : questsList) {
+                    if (currentPredicate.test(s)) {
+                        removeFilterList.add(s);                      //даденият гост се добавя в текущия списък за премахване на филтрирани(премахнати) гости от основния списък
+                    }
+                }
+                filterList.removeAll(removeFilterList);               //премахване на филтрирани гости от основния списък
+            }
+
+            input = scanner.nextLine();
         }
 
-        for (String guest : guests) {
-            boolean isGoing = true;
-            for (String key : predicateMap.keySet()) {
-                if (predicateMap.get(key).test(guest)) {
-                    isGoing = false;
-                    break;
-                }
-            }
+        questsList.removeAll(filterList);
 
-            if (isGoing) {
-                System.out.print(guest + " ");
-            }
+        if (!questsList.isEmpty()) {
+            System.out.print(questsList.toString().replaceAll("[\\[\\],]", ""));
         }
     }
 }
