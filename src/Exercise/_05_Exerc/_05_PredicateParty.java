@@ -38,17 +38,17 @@ public class _05_PredicateParty {
                         toRemoveList.add(guest);
                     }
                 }
-                guestsList.removeAll(toRemoveList);
+                guestsList.removeAll(toRemoveList);                         //премахва всички срещани елементи на toRemoveList от questList
 
-            } else {                                                          //добавяне на елементи спрямо УСЛОВИЕТО
-                ArrayList<String> toAddList = new ArrayList<>();              //създава се лист с елементи за добавяне
+            } else {                                                        //добавяне на елементи спрямо УСЛОВИЕТО
+                ArrayList<String> toAddList = new ArrayList<>();            //създава се лист с елементи за добавяне
 
-                for (String guest : guestsList) {                             //обхожда questLis и при отговаряне на зададеното УСЛОВИЕ добавя елемента към toAddList
+                for (String guest : guestsList) {                           //обхожда questLis и при отговаряне на зададеното УСЛОВИЕ добавя елемента към toAddList
                     if (predicate.test(guest)) {
                         toAddList.add(guest);
                     }
                 }
-                guestsList.addAll(toAddList);
+                guestsList.addAll(toAddList);                               //добавя всички срещани елементи на toAddList в questsList
             }
 
             inputData = scanner.nextLine();
