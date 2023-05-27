@@ -8,61 +8,51 @@ public class _05_PredicateParty {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        ArrayList<String> guests = Arrays.stream(scanner.nextLine().split("\\s+"))
+                                          .collect(Collectors.toCollection(ArrayList::new));
 
-        List<String> names = Arrays.stream(scanner.nextLine().split(" ")).collect(Collectors.toList());
+        String line = scanner.nextLine();
 
-        String input;
-        while (!"Party!".equals(input = scanner.nextLine()) && !names.isEmpty()) {
-            String[] tokens = input.split(" ");
-            String command = tokens[0];
-            String secondCommand = tokens[1];
+        while (!line.equals("Party!")) {
 
-            if (command.equals("Remove")) {
-                if (secondCommand.equals("StartsWith")) {
-                    String lastCommand = tokens[2];
-                    names = names.stream().filter(name -> !name.startsWith(lastCommand)).collect(Collectors.toList());
-                } else if (secondCommand.equals("EndsWith")) {
-                    String lastCommand = tokens[2];
-                    names = names.stream().filter(name -> !name.endsWith(lastCommand)).collect(Collectors.toList());
-                } else if (secondCommand.equals("Length")) {
-                    int namesLength = Integer.parseInt(tokens[2]);
-                    names = names.stream().filter(name -> name.length() != namesLength).collect(Collectors.toList());
-                }
+            Predicate<String> predicate = null;
 
-            } else if (command.equals("Double")) {
-                if (secondCommand.equals("StartsWith")) {
-                    String lastCommand = tokens[2];
-                    BiPredicate<String, String> doubleStartsWithPredicate = String::startsWith;
-                    List<String> current = names.stream().filter(name -> doubleStartsWithPredicate.test(name, lastCommand)).collect(Collectors.toList());
-                    for (int i = 0; i < current.size(); i++) {
-                        names.add(names.indexOf(current.get(i)),current.get(i));
-                    }
+            String criteria = line.split("\\s+")[2];
 
-                } else if (secondCommand.equals("EndsWith")) {
-                    String lastCommand = tokens[2];
-                    BiPredicate<String, String> doubleEndsWithPredicate = String::endsWith;
-                    List<String> current = names.stream().filter(name -> doubleEndsWithPredicate.test(name, lastCommand)).collect(Collectors.toList());
-                    for (int i = 0; i < current.size(); i++) {
-                        names.add(names.indexOf(current.get(i)), current.get(i));
-                    }
-                } else if (secondCommand.equals("Length")) {
-                    int namesLength = Integer.parseInt(tokens[2]);
-                    BiPredicate<String, Integer> doubleLengthPredicate = (name, length) -> name.length() == length;
-                    List<String> current = names.stream().filter(name -> doubleLengthPredicate.test(name, namesLength)).collect(Collectors.toList());
-                    for (int i = 0; i < current.size(); i++) {
-                        names.add(names.indexOf(current.get(i)), current.get(i));
-                    }
-
-                }
+            if (line.contains("Length")) {
+                predicate = x -> x.length() == Integer.parseInt(criteria);
+            } else if (line.contains("StartsWith")) {
+                predicate = x -> x.startsWith(criteria);
+            } else {
+                predicate = x -> x.endsWith(criteria);
             }
+
+            if (line.contains("Remove")) {
+                ArrayList<String> toRemove = new ArrayList<>();
+                for (String guest : guests) {
+                    if (predicate.test(guest)) {
+                        toRemove.add(guest);
+                    }
+                }
+
+                guests.removeAll(toRemove);
+            } else {
+                ArrayList<String> toAdd = new ArrayList<>();
+                for (String guest : guests) {
+                    if (predicate.test(guest)) {
+                        toAdd.add(guest);
+                    }
+                }
+                guests.addAll(toAdd);
+            }
+
+            line = scanner.nextLine();
         }
 
-        Collections.sort(names);
-        if (!names.isEmpty()) {
-
-            System.out.println(String.join(", ", names) + " are going to the party!");
-        } else {
+        if (guests.isEmpty()) {
             System.out.println("Nobody is going to the party!");
+        } else {
+            System.out.println(guests.stream().sorted().collect(Collectors.toCollection(ArrayList::new)).toString().replaceAll("([\\[\\]])", "") + " are going to the party!");
         }
     }
 }
