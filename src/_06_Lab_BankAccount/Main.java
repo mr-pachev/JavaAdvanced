@@ -1,7 +1,5 @@
 package _06_Lab_BankAccount;
 
-import _06_Lab_Constructors.Car;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -71,3 +69,4 @@ public class Main {
         BankAccount.setInterestRate(interest);
     }
 }
+
