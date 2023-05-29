@@ -61,6 +61,7 @@ public class BlindMansBuff_02 {
                     countTouched++;
                     matrix[rowB][colB] = "B";                   //новата позиция става с новия символ
                 } else if (matrix[rowB][colB].equals("O")) {
+                    //изчаква се следващ ход, като rowB и colB трябва да си върнат стойностите на реалната позиция на B
                     rowB = rowOldB;
                     colB = colOldB;
                     input = scanner.nextLine();
@@ -73,8 +74,10 @@ public class BlindMansBuff_02 {
                 rowOldB = rowB;
                 colOldB = colB;
             }
+            //ако валидацията не е успешна rowB и colB трябва да си върнат стойностите на реалната позиция на B
             rowB = rowOldB;
             colB = colOldB;
+
             input = scanner.nextLine();
         }
         System.out.println("Game over!");
