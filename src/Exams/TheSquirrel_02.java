@@ -2,7 +2,7 @@ package Exams;
 
 import java.util.Scanner;
 
-public class TheSquirrel {
+public class TheSquirrel_02 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
