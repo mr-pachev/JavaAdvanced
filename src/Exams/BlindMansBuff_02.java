@@ -36,7 +36,7 @@ public class BlindMansBuff_02 {
         int countTouched = 0;
         int countMoves = 0;
 
-        while (!input.equals("Finish") && countTouched < 3) {
+        while (!input.equals("Finish") && countTouched < 3) { //проверка дали командта не е Finish и брояча на докосванията не е станал 3
             String command = input;
 
             switch (command) {
@@ -54,12 +54,12 @@ public class BlindMansBuff_02 {
                     break;
             }
 
-            if (isValid(matrix, rowB, colB)) {
+            if (isValid(matrix, rowB, colB)) {                  //проверка валидация на бъдещата позиция
 
                 if (matrix[rowB][colB].equals("P")) {
                     countMoves++;
                     countTouched++;
-                    matrix[rowB][colB] = "B";
+                    matrix[rowB][colB] = "B";                   //новата позиция става с новия символ
                 } else if (matrix[rowB][colB].equals("O")) {
                     rowB = rowOldB;
                     colB = colOldB;
@@ -67,13 +67,14 @@ public class BlindMansBuff_02 {
                     continue;
                 } else if (matrix[rowB][colB].equals("-")) {
                     countMoves++;
-                    matrix[rowB][colB] = "B";
+                    matrix[rowB][colB] = "B";                   //новата позиция става с новия символ
                 }
-                matrix[rowOldB][colOldB] = "-";
+                matrix[rowOldB][colOldB] = "-";                 //новата позиция става с новия символ
                 rowOldB = rowB;
                 colOldB = colB;
             }
-
+            rowB = rowOldB;
+            colB = colOldB;
             input = scanner.nextLine();
         }
         System.out.println("Game over!");
@@ -81,6 +82,6 @@ public class BlindMansBuff_02 {
     }
 
     public static boolean isValid(String[][] matrix, int row, int col) {
-        return row >= 0 && row < matrix.length && col >= 0 && col < matrix[0].length;
+        return row >= 0 && row < matrix.length && col >= 0 && col < matrix[row].length;
     }
 }
