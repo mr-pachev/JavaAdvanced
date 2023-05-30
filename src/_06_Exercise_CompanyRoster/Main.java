@@ -1,83 +1,70 @@
 package _06_Exercise_CompanyRoster;
 
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(reader.readLine());
+        LinkedHashMap<String, Department> deparments = new LinkedHashMap<>();
 
-        int n = Integer.parseInt(scanner.nextLine());
-        Map<String, List<Employee>> departmentMap = new HashMap<>();    //мап с име на отдел и служителите в него
-        List<Employee> employeeList = new ArrayList<>();                //списък със служителите на даден отдел
-        Employee employee = null;
+        for (int i = 0; i < n; i++) {
+            String[] tokens = reader.readLine().split(" ");
 
-        for (int i = 1; i <= n; i++) {
-            String[] inputData = scanner.nextLine().split("\\s+");
+            String nameEmployee = tokens[0];
+            double salary = Double.parseDouble(tokens[1]);
+            String position = tokens[2];
+            String nameDepartnment = tokens[3];
+            Department department;
 
-            String name = inputData[0];
-            double salary = Double.parseDouble(inputData[1]);
-            String position = inputData[2];
-            String department = inputData[3];
-
-
-            if (inputData.length == 4) {
-                employee = new Employee(name, salary, position, department);
-            } else if (inputData.length == 5) {
-                if (Character.isDigit(inputData[4].charAt(0))) {
-                    int age = Integer.parseInt(inputData[4]);
-                    employee = new Employee(name, salary, position, department, age);
-                } else {
-                    String email = inputData[4];
-                    employee = new Employee(name, salary, position, department, email);
-                }
-            } else if (inputData.length == 6) {
-                String email = inputData[4];
-                int age = Integer.parseInt(inputData[4]);
-                employee = new Employee(name, salary, position, department, email, age);
-            }
-
-            //проверка дали отдела съществува в мапа
-            if (!departmentMap.containsKey(department)) {
-                employeeList = new ArrayList<>();
-                employeeList.add(employee);
-                departmentMap.put(department, employeeList);
+            if (!deparments.containsKey(nameDepartnment)) {
+                department = new Department(nameDepartnment);
+                deparments.put(nameDepartnment, department);
             } else {
-                employeeList = departmentMap.get(department);   //взимаме списъка със служители на конкретния отдел
-                employeeList.add(employee);                     //добавяме обекта-служител към списъка със служители на конкретния отдел
-                departmentMap.put(department, employeeList);
+                department = deparments.get(nameDepartnment);
             }
 
+            Employee employee = null;
+            if (tokens.length == 4) {
+                employee = new Employee(nameEmployee, salary, position, department);
+            } else if (tokens.length == 5) {
+                try {
+                    int age = Integer.parseInt(tokens[4]);
+                    employee = new Employee(nameEmployee, salary, position, department, age);
+                } catch (NumberFormatException e) {
+                    String email = tokens[4];
+                    employee = new Employee(nameEmployee, salary, position, department, email);
+                }
+            } else if (tokens.length == 6) {
+                String email = tokens[4];
+                int age = Integer.parseInt(tokens[5]);
+                employee = new Employee(nameEmployee, salary, position, department, email, age);
+            }
+            deparments.get(nameDepartnment).getEmployees().add(employee);
         }
 
-        String maxDepartmentAverageSalary = departmentMap.entrySet().stream()
-                .max(Comparator.comparing(e -> averageSalary(e.getValue())))
-                .get()
-                .getKey();
+        List<Employee> employeeList = deparments.entrySet().stream()
+                .sorted((emp1, emp2) -> {
+                    double salary1 = emp1.getValue().getEmployees().stream().mapToDouble(Employee::getSalary).sum();
+                    double salary2 = emp2.getValue().getEmployees().stream().mapToDouble(Employee::getSalary).sum();
+                    return Double.compare(salary2, salary1);
+                })
+                .map(emp -> emp.getValue().getEmployees())
+                .findFirst().orElse(null);
 
-        System.out.printf("Highest Average Salary: %s%n", maxDepartmentAverageSalary);
+        System.out.printf("Highest Average Salary: %s%n", employeeList.get(0).getDepartment().getName());
 
-        //взимаме списъка със служителите на отдела с най-висока средна заплата
-        List<Employee> employeesMaxSalaryList = departmentMap.get(maxDepartmentAverageSalary);
-
-        //сортеране по заплата (в случая по възходящ ред)
-        employeesMaxSalaryList.stream()
-                .sorted(Comparator.comparingDouble(emploee -> emploee.getSalary()));
-
-        Collections.reverse(employeesMaxSalaryList); //пренареждаме списъка
-
-        for (Employee employee1 : employeesMaxSalaryList) {
-            System.out.println(employee1);
-        }
-
-    }
-
-    //изчислява средната заплата на служителите от даден отдел
-    public static double averageSalary(List<Employee> employeeList) {
-        double avr = 0;
-
-        for (Employee employee : employeeList) {
-            avr += employee.getSalary();
-        }
-        return avr / employeeList.size();
+        employeeList.stream().sorted((emp1, emp2) -> Double.compare(emp2.getSalary(), emp1.getSalary()))
+                .forEach(emp -> {
+                    System.out.printf("%s %.2f %s %d%n",
+                            emp.getName(),
+                            emp.getSalary(),
+                            emp.getEmail(),
+                            emp.getAge());
+                });
     }
 }
