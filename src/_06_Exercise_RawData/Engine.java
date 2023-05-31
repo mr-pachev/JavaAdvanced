@@ -1,27 +1,15 @@
 package _06_Exercise_RawData;
 
 public class Engine {
-    private int speed;
-    private int power;
+    private int engineSpeed;
+    private int enginePower;
 
-    public Engine(int speed, int power) {
-        this.speed = speed;
-        this.power = power;
+    public Engine(int engineSpeed, int enginePower) {
+        this.engineSpeed = engineSpeed;
+        this.enginePower = enginePower;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getPower() {
-        return power;
-    }
-
-    public void setPower(int power) {
-        this.power = power;
+    public int getEnginePower() {
+        return enginePower;
     }
 }

@@ -1,27 +1,15 @@
 package _06_Exercise_RawData;
 
 public class Cargo {
-    private int weight;
-    private String type;
+    private int cargoWeight;
+    private String cargoType;
 
-    public Cargo(int weight, String type) {
-        this.weight = weight;
-        this.type = type;
+    public Cargo(int cargoWeight, String cargoType) {
+        this.cargoWeight = cargoWeight;
+        this.cargoType = cargoType;
     }
 
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public String getCargoType() {
+        return cargoType;
     }
 }
