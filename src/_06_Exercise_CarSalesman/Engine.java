@@ -1,38 +1,55 @@
 package _06_Exercise_CarSalesman;
 
 public class Engine {
-    private static final String DEFAULT_VALUE = "n/a";
 
     private String model;
-    private String power;
+    private int power;
     private String displacement;
+    private int separator;
     private String efficiency;
 
-    public Engine(String model, String power, String displacement, String efficiency) {
+    public Engine(String model, int power) {
+        this.model = model;
+        this.power = power;
+        this.displacement = "n/a";
+        this.efficiency = "n/a";
+    }
+
+    public Engine(String model, int power, String displacement, int separator) {
+        this.model = model;
+        this.power = power;
+        this.displacement = displacement;
+        this.separator = separator;
+        this.efficiency = "n/a";
+    }
+
+    public Engine(String model, int power, String efficiency) {
+        this.model = model;
+        this.power = power;
+        this.displacement = "n/a";
+        this.efficiency = efficiency;
+    }
+
+    public Engine(String model, int power, String displacement, String efficiency) {
         this.model = model;
         this.power = power;
         this.displacement = displacement;
         this.efficiency = efficiency;
     }
 
-    public Engine(String model, String power, String value) {
-        this(model, power);
-        if (value.matches("-?\\d+(\\.\\d+)?")) {
-            this.displacement = value;
-        } else {
-            this.efficiency = value;
-        }
+    public String getModel() {
+        return model;
     }
 
-    public Engine(String model, String power) {
-        this(model, power, DEFAULT_VALUE, DEFAULT_VALUE);
+    public String getDisplacement() {
+        return displacement;
     }
 
-    @Override
-    public String toString() {
-        return this.model + ":\n" +
-                "Power: " + this.power + "\n" +
-                "Displacement: " + this.displacement + "\n" +
-                "Efficiency: " + this.efficiency + "\n";
+    public String getEfficiency() {
+        return efficiency;
+    }
+
+    public int getPower() {
+        return power;
     }
 }
