@@ -1,4 +1,4 @@
-package Demo_06_PokemonTrainer;
+package _06_PokemonTrainer;
 
 public class Pokemon {
     private String name;

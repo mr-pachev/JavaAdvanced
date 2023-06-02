@@ -1,4 +1,4 @@
-package Demo_06_PokemonTrainer;
+package _06_PokemonTrainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,34 +23,31 @@ public class Trainer {
         return numberOfBadges;
     }
 
-    //проверка дали някой покемон от конкретния списък съдържа  конкретната команда и добавяне на 1 badge
-    public boolean isExist(Trainer trainer, String command) {
-        boolean isExist = false;
-        for (Pokemon pokemon1 : pokemonsList) {
+    //проверка дали някой покемон от конкретния списък съдържа  конкретната команда
+    public boolean isExist(String command) {
+        for (Pokemon pokemon1 : this.pokemonsList) {
             if (pokemon1.getElement().equals(command)) {
-                this.numberOfBadges++;
-                isExist = true;
+                return true;
             }
         }
-        return isExist;
+        return false;
+    }
+
+    //добавя един бадж на треньора->
+    public void addBudge() {
+        this.numberOfBadges++;
     }
 
     //премахва на всеки покемон от списъка на дадения треньор по 10 здраве
-    public void removeHealth(Trainer trainer){
-        for (Pokemon pokemon1 : pokemonsList) {
-            int currentHealth = pokemon1.getHealth() - 10;
-            pokemon1.setHealth(currentHealth);
-        }
+    public void removeHealth() {
+        this.pokemonsList.forEach(p -> p.setHealth(p.getHealth() - 10));
     }
 
     //премахва покемони от списъка със здраве < 1
-    public void removePokemon(Trainer trainer){
-        for (Pokemon pokemon1 : new ArrayList<Pokemon>(pokemonsList) ) {
-            if (pokemon1.getHealth() < 1){
-                this.pokemonsList.remove(pokemon1);
-            }
-        }
+    public void removePokemon() {
+        this.pokemonsList.removeIf(pokemon1 -> pokemon1.getHealth() < 1);
     }
+
 
     @Override
     public String toString() {

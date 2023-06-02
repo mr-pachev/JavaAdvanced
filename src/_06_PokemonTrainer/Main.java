@@ -1,16 +1,12 @@
-package Demo_06_PokemonTrainer;
+package _06_PokemonTrainer;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         String input = scanner.nextLine();
-
-        Trainer trainer = null;
-        Pokemon pokemon = null;
 
         Map<String, Trainer> trainersMap = new LinkedHashMap<>();    //съдържа име на треньор и характеристиките му
 
@@ -22,7 +18,8 @@ public class Main {
             String pokemonElement = dataInput[2];
             int pokemonHealth = Integer.parseInt(dataInput[3]);
 
-            pokemon = new Pokemon(pokemonName, pokemonElement, pokemonHealth);
+            Pokemon pokemon = new Pokemon(pokemonName, pokemonElement, pokemonHealth);
+            Trainer trainer = null;
 
             if (trainersMap.containsKey(trainerName)) {
                 trainer = trainersMap.get(trainerName);
@@ -30,7 +27,7 @@ public class Main {
                 trainer = new Trainer(trainerName);
             }
             trainer.getPokemonsList().add(pokemon);
-            trainersMap.put(trainerName, trainer);
+            trainersMap.putIfAbsent(trainerName, trainer);
 
             input = scanner.nextLine();
         }
@@ -40,22 +37,23 @@ public class Main {
             String command = input;
 
             for (Map.Entry<String, Trainer> entry : trainersMap.entrySet()) {
-                trainer = entry.getValue();                             //конкретен списък с покемони на конкретен треньор
+                Trainer trainer = entry.getValue();                             //конкретен обект треньор
 
-                if (!trainer.isExist(trainer, command)) {
-                    trainer.removeHealth(trainer);
+                if (!trainer.isExist(command)) {                              //проверка дали треньора ими ПОНЕ един покемон, за да получи САМО един бадж
+                    trainer.removeHealth();
+                } else {
+                    trainer.addBudge();
                 }
-
-                trainer.removePokemon(trainer);
+                trainer.removePokemon();
             }
 
             input = scanner.nextLine();
         }
 
         //сортиране на мапа само по стойност на value в низходящ ред впротивен случай важи подредбата на LinkedTreeMap-а
-      trainersMap.values().stream()
-              .sorted((n1, n2) -> Integer.compare(n2.getNumberOfBadges(), n1.getNumberOfBadges()))
-              .forEach(System.out::print);
+        trainersMap.values().stream()
+                .sorted((n1, n2) -> Integer.compare(n2.getNumberOfBadges(), n1.getNumberOfBadges()))
+                .forEach(System.out::print);
 
 
     }
