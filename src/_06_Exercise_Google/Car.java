@@ -1,16 +1,16 @@
 package _06_Exercise_Google;
 
 public class Car {
-    private String model;
-    private String speed;
+    private String carModel;
+    private String carSpeed;
 
-    public Car(String model, String speed) {
-        this.model = model;
-        this.speed = speed;
+    public Car(String carModel, String carSpeed) {
+        this.carModel = carModel;
+        this.carSpeed = carSpeed;
     }
 
     @Override
     public String toString() {
-        return String.format("%s %s", this.model, this.speed);
+        return String.format("%s %s", this.carModel, this.carSpeed);
     }
 }

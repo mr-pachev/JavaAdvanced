@@ -5,17 +5,68 @@ import java.util.List;
 
 public class Person {
     private String name;
-    private Company company;
-    private Car car;
-    private List<Pokemon> pokemons;
-    private List<Parent> parents;
-    private List<Child> children;
 
-    public Person(String name) {
+    private Company company;
+    private List<Pokemon> pokemonsList;
+    private List<Parents> parentsList;
+    private List<Children> childrenList;
+    private Car car;
+
+    public Person(String name, Company company, Car car) {
         this.name = name;
-        this.pokemons = new ArrayList<>();
-        this.parents = new ArrayList<>();
-        this.children = new ArrayList<>();
+        this.company = null;
+        this.pokemonsList = new ArrayList<>();
+        this.parentsList = new ArrayList<>();
+        this.childrenList = new ArrayList<>();
+        this.car = null;
+    }
+
+    public void addPokemon(Pokemon pokemon) {
+        this.pokemonsList.add(pokemon);
+    }
+
+    public void addParents(Parents parents) {
+        this.parentsList.add(parents);
+    }
+
+    public void addChildren(Children children) {
+        this.childrenList.add(children);
+    }
+
+    public Person() {
+        this.pokemonsList = new ArrayList<>();
+        this.parentsList = new ArrayList<>();
+        this.childrenList = new ArrayList<>();
+    }
+
+    public Person(List<Pokemon> pokemonsList, List<Parents> parentsList, List<Children> childrenList) {
+        this.pokemonsList = pokemonsList;
+        this.parentsList = parentsList;
+        this.childrenList = childrenList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public List<Pokemon> getPokemonsList() {
+        return pokemonsList;
+    }
+
+    public List<Parents> getParentsList() {
+        return parentsList;
+    }
+
+    public List<Children> getChildrenList() {
+        return childrenList;
+    }
+
+    public Car getCar() {
+        return car;
     }
 
     public void setCompany(Company company) {
@@ -26,36 +77,5 @@ public class Person {
         this.car = car;
     }
 
-    public void add(Parent parent) {
-        this.parents.add(parent);
-    }
 
-    public void add(Child child) {
-        this.children.add(child);
-    }
-
-    public void add(Pokemon pokemon) {
-        this.pokemons.add(pokemon);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder output = new StringBuilder();
-        output.append(this.name).append(System.lineSeparator());
-        output.append("Company:").append(System.lineSeparator());
-        if (this.company != null) {
-            output.append(this.company).append(System.lineSeparator());
-        }
-        output.append("Car:").append(System.lineSeparator());
-        if (this.car != null) {
-            output.append(this.car).append(System.lineSeparator());
-        }
-        output.append("Pokemon:").append(System.lineSeparator());
-        this.pokemons.forEach(pokemon -> output.append(pokemon).append(System.lineSeparator()));
-        output.append("Parents:").append(System.lineSeparator());
-        this.parents.forEach(parent -> output.append(parent).append(System.lineSeparator()));
-        output.append("Children:").append(System.lineSeparator());
-        this.children.forEach(child -> output.append(child).append(System.lineSeparator()));
-        return output.toString();
-    }
 }

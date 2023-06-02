@@ -1,4 +1,4 @@
-package Demo_06_Exercise_Google;
+package _06_Exercise_Google;
 
 public class Children {
     private String childName;
@@ -9,5 +9,7 @@ public class Children {
         this.childBirthday = childBirthday;
     }
 
-
+    public String toString() {
+        return String.format("%s %s", this.childName, this.childBirthday);
+    }
 }

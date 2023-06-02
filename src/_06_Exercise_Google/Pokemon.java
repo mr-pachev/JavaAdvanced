@@ -1,16 +1,16 @@
 package _06_Exercise_Google;
 
 public class Pokemon {
-    private String name;
-    private String type;
+    private String pokemonName;
+    private String pokemonType;
 
-    public Pokemon(String name, String type) {
-        this.name = name;
-        this.type = type;
+    public Pokemon(String pokemonName, String pokemonType) {
+        this.pokemonName = pokemonName;
+        this.pokemonType = pokemonType;
     }
 
     @Override
     public String toString() {
-        return String.format("%s %s", this.name, this.type);
+        return String.format("%s %s", this.pokemonName, this.pokemonType);
     }
 }

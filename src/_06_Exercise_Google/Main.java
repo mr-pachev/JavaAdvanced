@@ -1,53 +1,115 @@
 package _06_Exercise_Google;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
-
-    private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private static Map<String, Person> people=new LinkedHashMap<>();
-
-    public static void main(String[] args) throws IOException {
-        gatherPersonalInformation();
-
-        String person = reader.readLine();
-
-        if (people.containsKey(person)) {
-            System.out.print(people.get(person));
-        }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
 
-    }
-    private static void gatherPersonalInformation() throws IOException {
-        String input;
-        while (! "End".equals(input = reader.readLine())) {
-            String[] tokens = input.split("\\s+");
-            String personName = tokens[0];
-            people.putIfAbsent(personName, new Person(personName));
+        String input = scanner.nextLine();
+        Map<String, Person> personMap = new LinkedHashMap<>();              //съдържа хора с тяхната информация
 
-            Person person = people.get(personName);
-            String command = tokens[1];
-            switch (command) {
+        Person person = null;
+
+        while (!input.equals("End")) {
+            String[] inputData = input.split("\\s+");
+
+            String personName = inputData[0];
+
+            if (!personMap.containsKey(personName)) {
+                personMap.put(personName, new Person());
+            }
+
+            person = personMap.get(personName);             //витаги че има създаден мап за този стъпка
+            Pokemon pokemon = null;
+            Parents parents = null;
+            Children children = null;
+            Car car = null;
+
+            switch (inputData[1]) {
                 case "company":
-                    person.setCompany(new Company(tokens[2], tokens[3], Double.parseDouble(tokens[4])));
+                    String companyName = inputData[2];
+                    String department = inputData[3];
+                    double salary = Double.parseDouble(inputData[4]);
+                    Company company = new Company(companyName, department, salary);
+                    person.setCompany(company);
                     break;
                 case "pokemon":
-                    person.add(new Pokemon(tokens[2], tokens[3]));
+                    String pokemonName = inputData[2];
+                    String pokemonType = inputData[3];
+                    pokemon = new Pokemon(pokemonName, pokemonType);
+                    person.addPokemon(pokemon);
                     break;
                 case "parents":
-                    person.add(new Parent(tokens[2], tokens[3]));
+                    String parentName = inputData[2];
+                    String parentBirthday = inputData[3];
+                    parents = new Parents(parentName, parentBirthday);
+                    person.addParents(parents);
                     break;
                 case "children":
-                    person.add(new Child(tokens[2], tokens[3]));
+                    String childName = inputData[2];
+                    String childBirthday = inputData[3];
+                    children = new Children(childName, childBirthday);
+                    person.addChildren(children);
                     break;
                 case "car":
-                    person.setCar(new Car(tokens[2], tokens[3]));
+                    String carModel = inputData[2];
+                    String carSpeed = inputData[3];
+                    car = new Car(carModel, carSpeed);
+                    person.setCar(car);
                     break;
             }
+            personMap.put(personName, person);
+
+            input = scanner.nextLine();
         }
+        String name = scanner.nextLine();
+
+        personMap.entrySet().stream()
+                .filter(e -> e.getKey().equals(name))
+                .forEach(entry -> {
+                    System.out.println(entry.getKey());
+                    if (entry.getValue().getCompany() != null) {
+                        System.out.println("Company:");
+                        System.out.println(entry.getValue().getCompany().toString());
+                    } else {
+                        System.out.println("Company:");
+                    }
+
+                    if (entry.getValue().getCar() != null) {
+                        System.out.println("Car:");
+                        System.out.println(entry.getValue().getCar().toString());
+                    } else {
+                        System.out.println("Car:");
+                    }
+
+                    if (!entry.getValue().getPokemonsList().isEmpty()) {
+                        System.out.println("Pokemon:");
+                        for (Pokemon pokemon : entry.getValue().getPokemonsList())
+                            System.out.println(pokemon.toString());
+                    } else {
+                        System.out.println("Pokemon:");
+                    }
+
+                    if (!entry.getValue().getParentsList().isEmpty()) {
+                        System.out.println("Parents:");
+                        for (Parents parents : entry.getValue().getParentsList())
+                            System.out.println(parents.toString());
+                    } else {
+                        System.out.println("Parents:");
+                    }
+
+                    if (!entry.getValue().getParentsList().isEmpty()) {
+                        System.out.println("Children:");
+                        for (Children children : entry.getValue().getChildrenList())
+                            System.out.println(children.toString());
+                    } else {
+                        System.out.println("Children:");
+                    }
+                });
+
     }
 }

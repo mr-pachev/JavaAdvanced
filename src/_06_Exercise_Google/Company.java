@@ -1,18 +1,18 @@
 package _06_Exercise_Google;
 
 public class Company {
-    private String name;
-    private String department;
+    private String companyName;
+    private String companyDepartment;
     private double salary;
 
-    public Company(String name, String department, double salary) {
-        this.name = name;
-        this.department = department;
+    public Company(String companyName, String companyDepartment, double salary) {
+        this.companyName = companyName;
+        this.companyDepartment = companyDepartment;
         this.salary = salary;
     }
 
     @Override
     public String toString() {
-        return String.format("%s %s %.2f", this.name, this.department, this.salary);
+        return String.format("%s %s %.2f", this.companyName, this.companyDepartment, this.salary);
     }
 }
