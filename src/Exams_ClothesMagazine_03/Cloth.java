@@ -1,4 +1,4 @@
-package _06_Exams_ClothesMagazine;
+package Exams_ClothesMagazine_03;
 
 public class Cloth {
     private String color;
