@@ -7,10 +7,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         int numLines = Integer.parseInt(scanner.nextLine());
-        Box<String> box = new Box<>("");
+        Box<Integer> box = new Box<>(0);
 
         for (int currentRow = 1; currentRow <= numLines; currentRow++) {
-            String input = scanner.nextLine();
+           int input = Integer.parseInt(scanner.nextLine());
             box.addElement(input);
         }
         int firstIndex = scanner.nextInt();
