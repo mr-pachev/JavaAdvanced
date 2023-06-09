@@ -41,17 +41,17 @@ public class Lake implements Iterable<Integer> {
 
     public void printLake() {
         for (int i = 0; i < lakeList.size(); i++) {
-            if (i % 2 != 0) {
+            if (i % 2 == 0) {
                 System.out.printf("%d, ", lakeList.get(i));
                 index++;
             }
         }
 
         for (int j = 0; j < lakeList.size(); j++) {
-            if (j % 2 == 0 && iterator().hasNext()) {
+            if (j % 2 != 0 && iterator().hasNext()) {
                 System.out.printf("%d, ", lakeList.get(j));
                 index++;
-            }else if(!iterator().hasNext() && j % 2 == 0){
+            }else if(!iterator().hasNext() && j % 2 != 0){
                 System.out.println(lakeList.get(j));
             }
         }
