@@ -7,7 +7,7 @@ public class KAT_01 {
         Scanner scanner = new Scanner(System.in);
 
         String[] licensePlate = scanner.nextLine().split("[,\\s+]+");
-        //пълнене срегистрационни номера -> опшка
+        //пълнене с регистрационни номера -> опашка
         Deque<Integer> licensePlateQueue = new ArrayDeque<>();
         Arrays.stream(licensePlate)
                 .mapToInt(Integer::parseInt)
@@ -27,22 +27,24 @@ public class KAT_01 {
 
         while (!licensePlateQueue.isEmpty() && !carsStack.isEmpty()) {
             dayCounter++;
+
             int currentLicensePlate = licensePlateQueue.poll();
             int currentCars = carsStack.pop();
+
             int diff = 0;
 
-            if (currentLicensePlate > currentCars) {                //когато опашката е по-голяма
+            if (currentLicensePlate > (currentCars * 2)) {                //когато номерата са повече
                 diff = currentLicensePlate - (currentCars * 2);
                 carCounter += currentCars;
 
-                if (diff > 0) {
-                    licensePlateQueue.offer(diff);
-                }
+                licensePlateQueue.offer(diff);
 
-            } else {                                                //когато стека е по-голям или равен
-                carCounter += currentLicensePlate / 2;
+            } else if (currentLicensePlate < (currentCars * 2)) {          //когато колите са повече
                 diff = currentCars - (currentLicensePlate / 2);
+                carCounter += currentLicensePlate / 2;
                 carsStack.addLast(diff);
+            } else {
+                carCounter += currentCars;
             }
         }
 
@@ -60,9 +62,9 @@ public class KAT_01 {
     }
 
     //метод за сумиране на елементи
-    public static int sumEleDeque(Deque<Integer> queue) {
+    public static int sumEleDeque(Deque<Integer> deque) {
         int sum = 0;
-        for (int n : queue) {
+        for (int n : deque) {
             sum += n;
         }
         return sum;
