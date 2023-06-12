@@ -7,12 +7,15 @@ public class KAT_01 {
         Scanner scanner = new Scanner(System.in);
 
         String[] licensePlate = scanner.nextLine().split("[,\\s+]+");
+        //пълнене срегистрационни номера -> опшка
         Deque<Integer> licensePlateQueue = new ArrayDeque<>();
         Arrays.stream(licensePlate)
                 .mapToInt(Integer::parseInt)
                 .forEach(licensePlateQueue::offer);
 
+
         String[] cars = scanner.nextLine().split("[,\\s+]+");
+        //пълнене с коли -> стек
         Deque<Integer> carsStack = new ArrayDeque<>();
         Arrays.stream(cars)
                 .mapToInt(Integer::parseInt)
@@ -30,14 +33,13 @@ public class KAT_01 {
 
             if (currentLicensePlate > currentCars) {                //когато опашката е по-голяма
                 diff = currentLicensePlate - (currentCars * 2);
-                carCounter += currentCars;;
-                if(diff > 0){
+                carCounter += currentCars;
+
+                if (diff > 0) {
                     licensePlateQueue.offer(diff);
                 }
 
             } else {                                                //когато стека е по-голям или равен
-                diff = 0;
-
                 carCounter += currentLicensePlate / 2;
                 diff = currentCars - (currentLicensePlate / 2);
                 carsStack.addLast(diff);
@@ -57,6 +59,7 @@ public class KAT_01 {
         }
     }
 
+    //метод за сумиране на елементи
     public static int sumEleDeque(Deque<Integer> queue) {
         int sum = 0;
         for (int n : queue) {
