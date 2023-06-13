@@ -15,7 +15,15 @@ public class TreasureHunt_02 {
         String[][] matrix = new String[rows][colum];
 
         for (int row = 0; row < rows; row++) {
-            matrix[row] = scanner.nextLine().split(" ");
+            String[] input = scanner.nextLine().split(" ");
+            for (int col = 0; col < colum; col++) {
+                //    matrix[row][col] = input[col];
+                if (col < input.length) {
+                    matrix[row][col] = input[col];
+                } else {
+                    matrix[row][col] = "-";
+                }
+            }
         }
 
         int currentRowY = -1;
@@ -25,8 +33,8 @@ public class TreasureHunt_02 {
         int newColY = -1;
 
         List<String> correctCommandsList = new ArrayList<>();
-        for (int row = 0; row < matrix.length; row++) {
-            for (int col = 0; col < matrix[0].length; col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < colum; col++) {
                 if (matrix[row][col].equals("Y")) {
                     currentRowY = row;
                     currentColY = col;
@@ -55,23 +63,36 @@ public class TreasureHunt_02 {
                     break;
             }
 
-            if (isNotValid(matrix, newRowY, newColY)) {     //невалиден ред или колона
+            if (!isValid(matrix, newRowY, newColY)) {
                 newRowY = currentRowY;
                 newColY = currentColY;
+                command = scanner.nextLine();
+                continue;
             }
 
+            matrix[currentRowY][currentColY] = "-";         //старата позиция става "-"
+
             if (matrix[newRowY][newColY].equals("T")) {      //среща с дърво
+                matrix[currentRowY][currentColY] = "Y";
                 newRowY = currentRowY;
                 newColY = currentColY;
-            }else {
-                correctCommandsList.add(command);              //добавяне на коректна командо
-                currentRowY = newRowY;
-                currentColY = newColY;
+                command = scanner.nextLine();
+                continue;
             }
+
+            if (matrix[newRowY][newColY].equals("X")){
+                matrix[newRowY][newColY] = "X/Y";
+            }else {
+                matrix[newRowY][newColY] = "Y";
+            }
+            correctCommandsList.add(command);               //добавяне на коректна командо
+            currentRowY = newRowY;
+            currentColY = newColY;
+
             command = scanner.nextLine();
         }
 
-        if (matrix[currentRowY][currentColY].equals("X")){
+        if (matrix[currentRowY][currentColY].equals("X/Y")){
             System.out.println("I've found the treasure!");
             System.out.print("The right path is ");
             System.out.print(correctCommandsList.toString().replaceAll("[\\[\\],]", "")
@@ -81,7 +102,7 @@ public class TreasureHunt_02 {
         }
     }
 
-    public static boolean isNotValid(String[][] matrix, int row, int col) {
-        return row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length;
+    public static boolean isValid(String[][] matrix, int row, int col) {
+        return row >= 0 && row < matrix.length && col >= 0 && col < matrix[0].length;
     }
 }
