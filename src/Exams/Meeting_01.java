@@ -9,7 +9,6 @@ public class Meeting_01 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-
         String[] male = scanner.nextLine().split("[\\s+]+");
         Deque<Integer> maleStack = new ArrayDeque<>();
         Arrays.stream(male)
