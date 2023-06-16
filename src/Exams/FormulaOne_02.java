@@ -19,7 +19,7 @@ public class FormulaOne_02 {
         for (int row = 0; row < rowAndColum; row++) {
             String[] input = scanner.nextLine().split("");
             for (int col = 0; col < rowAndColum; col++) {
-                //    matrix[row][col] = input[col];
+
                 if (col < input.length) {
                     matrix[row][col] = input[col];
                 } else {
@@ -41,7 +41,6 @@ public class FormulaOne_02 {
         }
         int newRowP = currentRowP;
         int newColP = currentColP;
-        boolean isBonuses = false;
 
         List<String> commandsList = new ArrayList<>();
         for (int commandNum = 1; commandNum <= sumCommands; commandNum++) {
@@ -74,7 +73,7 @@ public class FormulaOne_02 {
                     case "right":
                         newColP++;
                         if (newColP >= matrix.length) {
-                            newRowP = 0;
+                            newColP = 0;
                         }
                         break;
                 }
@@ -84,6 +83,7 @@ public class FormulaOne_02 {
                 }else if (matrix[newRowP][newColP].equals("T")){
                     newRowP = currentRowP;
                     newColP = currentColP;
+                    matrix[newRowP][newColP] = "P";
                 }else if (matrix[newRowP][newColP].equals("F")) {
                     isFinish = true;
                     matrix[newRowP][newColP] = "P";
