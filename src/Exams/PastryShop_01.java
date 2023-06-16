@@ -38,16 +38,17 @@ public class PastryShop_01 {
             } else if (sum == 75) {
                 liquidsQueue.poll();
                 ingredientStack.pop();
-                advancedMaterialsMap.put("Pie", advancedMaterialsMap.get("Pie") + 1);
+                advancedMaterialsMap.put("Pastry", advancedMaterialsMap.get("Pastry") + 1);
             } else if (sum == 100) {
                 liquidsQueue.poll();
                 ingredientStack.pop();
-                advancedMaterialsMap.put("Pastry", advancedMaterialsMap.get("Pastry") + 1);
+                advancedMaterialsMap.put("Pie", advancedMaterialsMap.get("Pie") + 1);
             } else {
                 liquidsQueue.poll();
                 ingredientStack.push(ingredientStack.pop() + 3);
             }
         }
+
         if (isReady(advancedMaterialsMap)) {
             System.out.println("Great! You succeeded in cooking all the food!");
         } else {
@@ -76,8 +77,8 @@ public class PastryShop_01 {
 
     public static boolean isReady(Map<String, Integer> map) {
         boolean isReady = true;
-        for (int countCurrentCocktail : map.values()) {
-            if (countCurrentCocktail == 0) {
+        for (int countFoods : map.values()) {
+            if (countFoods == 0) {
                 isReady = false;
                 break;
             }
